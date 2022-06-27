@@ -1,1 +1,3 @@
 # gitignore
+controllers/TestingController.php
+views/testing/*.php
