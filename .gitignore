@@ -1,3 +1,4 @@
 # gitignore
 controllers/TestingController.php
 views/testing/*.php
+config/bd.sql
