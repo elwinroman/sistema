@@ -11,7 +11,11 @@ class View {
      *                          incluyendo la carpeta
      */
     public function render($nombre) {
+        require 'views/layout/header.php';
+        require 'views/layout/navbar.php';
+        require 'views/layout/sidebar.php';
         require 'views/' . $nombre . '.php';
+        require 'views/layout/footer.php';
     }
 }
 
