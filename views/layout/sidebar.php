@@ -1,6 +1,6 @@
 <aside class="sidebar">
     <div class="top-sidebar">
-        Top sidebar
+        <!-- Top sidebar -->
     </div>
     <div class="menu-sidebar">
         <div class="menu-panel">
@@ -40,7 +40,7 @@
         </div>
     </div>
     <div class="bottom-sidebar">
-        Bottom sidebar
+        <!-- Bottom sidebar -->
     </div>
 </aside>
 <main>

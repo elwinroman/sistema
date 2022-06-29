@@ -1,0 +1,183 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    /* medidas */
+    --navbar-height: 70px;
+    --sidebar-width: 250px;
+    --sidebar-short-width: 80px;
+    --menu-link-height: 45px; 
+    --footer-height: 80px;
+    
+    /* colores */
+    --color-denim: #1465BB;
+    --color-lotion: #FAFAFA;
+    --color-platinum: #E2E2E2;
+    --color-antiflash-white: #F2F2F2;
+}
+
+/* Estilos para el navbar */
+.mynavbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
+    font-family: 'Poppins', Helvetica, sans-serif;
+
+    background: var(--color-denim);
+    color: var(--color-lotion);
+}
+.mynavbar > div.logo {
+    flex-grow: 1;
+}
+.mynavbar .toggle-sidebar {
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+.mynavbar .user-mode {
+    font-size: 0.85rem;
+}
+
+/* Agrupa el contenido principal y footer */
+main {
+    position: relative;
+    display: flex;
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+/* Estilos para el Sidebar */
+.sidebar {
+    z-index: 1000;
+    position: fixed;
+    top: var(--navbar-height);
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', Helvetica, sans-serif;
+    gap: 10px;
+
+    background: white;
+    border-right: 1px solid var(--color-platinum);
+}
+/* Menu */
+.sidebar .menu-sidebar {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 0.85rem;
+    
+    color: #646464;
+}
+.menu-panel > .menu-link {
+    cursor: pointer;
+    height: var(--menu-link-height);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    margin: 0 12px;
+    border-radius: 6px;
+}
+.menu-panel > .menu-link:hover {
+    background: #6091D8;
+    color: white;
+}
+.menu-link > i.menu-icon {
+    width: 20px;
+    flex-shrink: 0;
+    font-size: 1.25rem;
+}
+.menu-link > span.menu-label {
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+.submenu-panel .submenu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: var(--menu-link-height);
+    cursor: pointer;
+    padding: 0 50px;
+}
+.submenu-panel .submenu-link:hover {
+    color: #3673c5;
+}
+.submenu-link .submenu-icon {
+    font-size: 6px;
+}
+
+/* Estilos para las vistas */
+.content {
+    width: calc(100% - var(--sidebar-width));
+    padding: 20px;
+    margin-bottom: var(--footer-height);
+    margin-left: var(--sidebar-width);
+
+    background: var(--color-antiflash-white);
+}
+
+/* Estilos para el footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    margin-left: var(--sidebar-width);
+    height: var(--footer-height);
+    width: calc(100% - var(--sidebar-width));
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    font-size: 0.85rem;
+
+    background-color: #0e0e0e;
+    color: white;
+}
+
+/* SHORT */
+body.short .sidebar {
+    width: var(--sidebar-short-width);
+}
+body.short .menu-panel {
+    margin-top: 10px;
+}
+body.short .menu-link {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+body.short .menu-link > i.menu-icon {
+    width: var(--sidebar-short-width);
+    text-align: center;
+}
+body.short .menu-link > span.menu-label,
+body.short .menu-link > i.menu-arrow {
+    opacity: 0;
+}
+body.short .submenu-panel {
+    opacity: 0;
+    position: fixed;
+    background: white;
+    transform: translateX(-10px);
+    margin-left: var(--sidebar-short-width);
+    pointer-events: none;
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 16%);
+}
+body.short .menu-panel.active .submenu-panel {
+    height: auto !important;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+body.short .content {
+    margin-left: var(--sidebar-short-width);
+    width: calc(100% - var(--sidebar-short-width));
+}
+body.short footer {
+    margin-left: var(--sidebar-short-width);
+    width: calc(100% - var(--sidebar-short-width));
+}
