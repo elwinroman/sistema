@@ -63,6 +63,7 @@ main {
     flex-direction: column;
     font-family: 'Poppins', Helvetica, sans-serif;
     gap: 10px;
+    transition: width 200ms;
 
     background: white;
     border-right: 1px solid var(--color-platinum);
@@ -85,6 +86,7 @@ main {
     padding: 0 16px;
     margin: 0 12px;
     border-radius: 6px;
+    transition: background 200ms, color 200ms;
 }
 .menu-panel > .menu-link:hover {
     background: #6091D8;
@@ -94,10 +96,23 @@ main {
     width: 20px;
     flex-shrink: 0;
     font-size: 1.25rem;
+    transition: color 200ms;
 }
 .menu-link > span.menu-label {
     flex-shrink: 0;
     flex-grow: 1;
+    transition: opacity 200ms;
+}
+.menu-link > i.menu-arrow {
+    transition: transform 200ms, color 200ms;
+}
+.menu-panel.active i.menu-arrow {
+    transform: rotate(90deg);
+}
+.menu-panel > .submenu-panel {
+    height: 0;
+    overflow: hidden;
+    transition: height 200ms;
 }
 .submenu-panel .submenu-link {
     display: flex;
@@ -106,6 +121,7 @@ main {
     height: var(--menu-link-height);
     cursor: pointer;
     padding: 0 50px;
+    transition: color 2000ms;
 }
 .submenu-panel .submenu-link:hover {
     color: #3673c5;
@@ -120,6 +136,7 @@ main {
     padding: 20px;
     margin-bottom: var(--footer-height);
     margin-left: var(--sidebar-width);
+    transition: margin-left 200ms, width 200ms;
 
     background: var(--color-antiflash-white);
 }
@@ -133,6 +150,7 @@ footer {
     width: calc(100% - var(--sidebar-width));
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
     font-size: 0.85rem;
+    transition: margin-left 200ms, width 200ms;
 
     background-color: #0e0e0e;
     color: white;
@@ -166,6 +184,7 @@ body.short .submenu-panel {
     margin-left: var(--sidebar-short-width);
     pointer-events: none;
     box-shadow: 3px 3px 10px rgb(0 0 0 / 16%);
+    transition-property: transform, opacity;
 }
 body.short .menu-panel.active .submenu-panel {
     height: auto !important;
