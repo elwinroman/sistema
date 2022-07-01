@@ -16,11 +16,17 @@ class App {
             } else {
                 $error = new ErrorController;
             }
-        } else {    // Index por defecto
-            $nombre_controlador = CONTROLLER_DEFAULT.'Controller';  // default controller
-            $action = ACTION_DEFAULT;
-            $controlador = new $nombre_controlador();
-            $controlador->$action();  // default action
+        } else {
+            // Si no hay una session muestra la página de login
+            if(empty($_SESSION['username'])) {
+                $login = New LoginController;
+                $login->view->render_login();
+            } else {    // Index por defecto
+                $nombre_controlador = CONTROLLER_DEFAULT.'Controller';  // default controller
+                $action = ACTION_DEFAULT;
+                $controlador = new $nombre_controlador();
+                $controlador->$action();  // default action
+            }
         }
     }
 }

@@ -5,8 +5,7 @@ class View {
     }
 
     /**
-     * Función que renderizza o carga la vista
-     * 
+     * Función que renderiza o carga la vista dentro del dashboard
      * @param{String} $nombre   Nombre del archivo de la vista
      *                          incluyendo la carpeta
      */
@@ -16,6 +15,11 @@ class View {
         require 'views/layout/sidebar.php';
         require 'views/' . $nombre . '.php';
         require 'views/layout/footer.php';
+    }
+
+    // Función que renderiza fuera del dashboard (login)
+    public function render_login() {
+        require 'views/login/login.php';
     }
 }
 
