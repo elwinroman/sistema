@@ -19,6 +19,7 @@ class View {
 
     // Función que renderiza fuera del dashboard (login)
     public function render_login() {
+        require 'views/layout/header.php';
         require 'views/login/login.php';
     }
 }

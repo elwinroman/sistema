@@ -12,10 +12,10 @@
     --footer-height: 80px;
     
     /* colores */
-    --color-denim: #1465BB;
-    --color-lotion: #FAFAFA;
+    --color-primary: #1465BB;
     --color-platinum: #E2E2E2;
-    --color-antiflash-white: #F2F2F2;
+    --color-font-body: #212529;
+    --color-input-placeholder: #5f6b70;
 }
 
 /* Estilos para el navbar */
@@ -31,8 +31,8 @@
     box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
     font-family: 'Poppins', Helvetica, sans-serif;
 
-    background: var(--color-denim);
-    color: var(--color-lotion);
+    background: var(--color-primary);
+    color: white;
 }
 .mynavbar > div.logo {
     flex-grow: 1;
@@ -65,7 +65,7 @@ main {
     gap: 10px;
     transition: width 200ms;
 
-    background: white;
+    background: #EDFFFA;
     border-right: 1px solid var(--color-platinum);
 }
 /* Menu */
@@ -121,7 +121,7 @@ main {
     height: var(--menu-link-height);
     cursor: pointer;
     padding: 0 50px;
-    transition: color 2000ms;
+    transition: color 200ms;
 }
 .submenu-panel .submenu-link:hover {
     color: #3673c5;
@@ -137,8 +137,6 @@ main {
     margin-bottom: var(--footer-height);
     margin-left: var(--sidebar-width);
     transition: margin-left 200ms, width 200ms;
-
-    background: var(--color-antiflash-white);
 }
 
 /* Estilos para el footer */
@@ -199,4 +197,32 @@ body.short .content {
 body.short footer {
     margin-left: var(--sidebar-short-width);
     width: calc(100% - var(--sidebar-short-width));
+}
+
+/* Estilos para el login */
+.body-login {
+    background: linear-gradient(90deg, #2196f3 0%, #81c9fa 51%, #b9ffff 100%);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    font-size: 0.85rem;
+    color: var(--color-font-body);
+}
+.login {
+    width: 300px;
+    height: auto;
+    padding: 30px 30px;
+    box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    background: white;
+}
+.login-title {
+    padding-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
