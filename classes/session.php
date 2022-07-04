@@ -1,13 +1,13 @@
 <?php
 
-class Session {
+class SessionStorage {
     private $username = 'username';
     private $role = 'role';
 
     public function __construct() {
-        if(session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if(session_status() == PHP_SESSION_NONE) {
+        //     session_start();
+        // }
     }
 
     public function accesoAutorizado() {

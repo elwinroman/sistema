@@ -3,8 +3,8 @@
 class ControllerBase {
     
     public function __construct() {
+        $this->session = new SessionStorage();
         $this->view = new View();
-        $this->session = new Session();
     }
 
     /**
@@ -28,7 +28,9 @@ class ControllerBase {
      * @return{Bool} Retorna falso si hay una variable $_POST que no existe
      *               caso contrario retorna verdadero
      */
-    protected function existsPOST($params) {
+    public function existsPOST($params) {
+        if(count($_POST) != count($params))
+            return false;
         foreach($params as $param) {
             if(!isset($_POST[$param])) 
                 return false;

@@ -15,7 +15,7 @@ class LoginController extends ControllerBase {
     }
 
     public function autenticar() {
-        $params = ['username', 'password']; 
+        $params = ['username', 'password'];
         
         if($this->existsPOST($params)) {
             $user_model = $this->loadModel('user');

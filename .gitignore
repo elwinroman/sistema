@@ -2,3 +2,7 @@
 controllers/TestingController.php
 views/testing/*.php
 config/bd.sql
+vendor/*
+tests/*.php
+composer.json
+composer.lock
