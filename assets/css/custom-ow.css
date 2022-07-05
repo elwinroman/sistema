@@ -40,6 +40,14 @@
 .input-ow::placeholder {
     color: var(--color-input-placeholder);
 }
+
+select:disabled {
+    color: #ced4da;
+    border-color: #ced4da;
+}
+select:disabled:hover {
+    border-color: #ced4da;
+}
 input:focus-visible {
     outline: none;
 }

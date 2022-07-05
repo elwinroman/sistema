@@ -10,9 +10,9 @@
 			
 			<fieldset class="form-field-ow">
 				<legend class="weigth-500-ow">Selecciona el tipo de oficina</legend>
-				<input type="radio" name="tipo-oficina" value="oficina-jefe" selected required>
+				<input type="radio" name="tipo-oficina" id="oficinajefe" value="oficina-jefe" checked required>
 				<label for="tipo-oficina">Oficina jefe</label>
-				<input type="radio" name="tipo-oficina" value="suboficina" required>
+				<input type="radio" name="tipo-oficina" id="suboficina" value="suboficina" required>
 				<label for="tipo-oficina">Suboficina</label>
 			</fieldset>
 
