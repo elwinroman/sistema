@@ -137,6 +137,7 @@ main {
     margin-bottom: var(--footer-height);
     margin-left: var(--sidebar-width);
     transition: margin-left 200ms, width 200ms;
+    font-family: 'Poppins', Helvetica, sans-serif;
 }
 
 /* Estilos para el footer */
@@ -225,4 +226,15 @@ body.short footer {
     padding-bottom: 10px;
     font-size: 1.5rem;
     font-weight: 500;
+}
+
+/* Estilos para crear oficina */
+#crear-oficina {
+    font-size: 0.85rem;
+}
+#crear-oficina form {
+    width: 50%;
+}
+#crear-oficina fieldset > legend {
+    font-size: 0.85rem;
 }

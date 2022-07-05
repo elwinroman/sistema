@@ -1,10 +1,12 @@
 /* Button */
 .btn-ow {
-    padding: 0.25rem 0.60rem;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 0.5rem;
     box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     border-radius: 4px;
     transition: all 300ms;
-    font-size: 0.85rem;
+    font-size: 0.85rem !important;
 }
 .btn-ow-primary {
     background: var(--color-primary);
@@ -20,10 +22,12 @@
 .input-ow {
     display: block;
     width: 100%;
-    padding: 0.25rem 0.60rem;
+    height: 30px;
+    line-height: 30px;
+    padding: 1px 0.5rem 0 0.5rem;
     border-radius: 4px;
     outline: none;
-    font-size: 0.85rem;
+    font-size: 0.85rem !important;
     background: white;
     color: var(--color-font-body);
     border: 1px solid #b9bec4;
@@ -36,11 +40,20 @@
 .input-ow::placeholder {
     color: var(--color-input-placeholder);
 }
-
+input:focus-visible {
+    outline: none;
+}
 .form-field-ow {
     margin-bottom: 15px;
+}
+/* Box */
+.box-ow {
+    border: 1px solid #d6cbcb;
+    padding: 20px 26px 20px 26px;
+    box-shadow: 0 4px 15px -2px rgb(0 0 0 / 15%);
 }
 /* Utils */
 .weigth-500-ow {
     font-weight: 500;
+    margin-bottom: 1px;
 }

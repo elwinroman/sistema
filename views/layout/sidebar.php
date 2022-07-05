@@ -20,21 +20,21 @@
                 </div>
             </div>
         </div>
-        <!-- ##### -->
+        <!-- Gestión de oficina -->
         <div class="menu-panel">
             <div class="menu-link" data-id="2">
                 <i class="menu-icon zmdi zmdi-account"></i>
-                <span class="menu-label">Item 1</span>
+                <span class="menu-label">Oficinas</span>
                 <i class="menu-arrow zmdi zmdi-chevron-right"></i>
             </div>
             <div class="submenu-panel">
                 <div class="submenu-link">
                     <i class="submenu-icon zmdi zmdi-circle"></i>
-                    <span class="submenu-label">Subitem 1</span>
+                    <a class="submenu-label" href="<?=URL_BASE?>oficina/formulario">Crear Oficina</a>
                 </div>
                 <div class="submenu-link">
                     <i class="submenu-icon zmdi zmdi-circle"></i>
-                    <span class="submenu-label">Subitem 2</span>
+                    <a class="submenu-label">Subitem 2</a>
                 </div>
             </div>
         </div>
