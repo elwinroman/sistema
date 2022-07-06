@@ -1,5 +1,4 @@
-// import utils from "./../../utils.js";
-export default class Oficina {
+export default class CrearOficina {
     
     constructor() {
         this.select_oficina = document.querySelector('#form-oficina select[name="oficina-jefe"]');
