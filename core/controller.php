@@ -5,6 +5,7 @@ class ControllerBase {
     public function __construct() {
         $this->session = new SessionStorage();
         $this->view = new View();
+        $this->util = new Util();
     }
 
     /**
@@ -29,8 +30,6 @@ class ControllerBase {
      *               caso contrario retorna verdadero
      */
     public function existsPOST($params) {
-        if(count($_POST) != count($params))
-            return false;
         foreach($params as $param) {
             if(!isset($_POST[$param])) 
                 return false;
@@ -38,7 +37,7 @@ class ControllerBase {
         return true;
     }
 
-    protected function redirect($url) {
+    public function redirect($url) {
         header("Location: " . URL_BASE . $url);
     }
 }

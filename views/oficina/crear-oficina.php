@@ -5,7 +5,7 @@
 			<h6 class="">Datos de la oficina</h6>
 			<div class="form-field-ow">		<!-- Field NOMBRE -->
 				<label for="nombre" class="weigth-500-ow">Nombre</label>
-				<input class="input-ow" type="text" name="nombre" maxlength="100" pattern="\s*([A-Za-zÀ-ÿ]\s?)+\s*" required autofocus>
+				<input class="input-ow" type="text" name="nombre" maxlength="100" pattern="\s*([A-Za-zÀ-ÿ]+\s*)+" required autofocus>
 			</div>
 			
 			<fieldset class="form-field-ow">

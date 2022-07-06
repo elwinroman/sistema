@@ -5,7 +5,7 @@ class ErrorController extends ControllerBase {
     public function __construct() {
         parent::__construct();
         
-        // El usuario no esta autorizado 
+        // Redirecciona cuando el usuario no está autorizado
         if(!$this->session->accesoAutorizado()) {
             $this->redirect('');
         }

@@ -11,6 +11,26 @@ class OficinaModel extends ModelBase {
         parent::__construct();
     }
 
+    public function insert() {
+        try {
+            $sql = "INSERT INTO oficinas(id, oficina_id, nombre) VALUES(:id, :oficina_id, :nombre)";
+            $query = $this->prepare($sql);
+            $query->execute([
+                ':id'         => null,
+                ':oficina_id' => $this->oficina_id,
+                ':nombre'     => $this->nombre
+            ]);
+            
+            if($query) {
+                $this->id = $this->getLastInsertId();
+                return true;
+            }
+            return false;
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
+
     /**
      * Función que devuelve una lista de oficinas jefe
      * @return data Lista de oficinas jefe
@@ -26,8 +46,10 @@ class OficinaModel extends ModelBase {
         }
     }
     
-    public function getUsername() { return $this->username; }
-    public function getPassword() { return $this->password; }
-    public function getRole() {     return $this->role; }
+    public function setNombre($nombre) {        $this->nombre = $nombre; }
+    public function setOficinaId($oficina_id) { $this->oficina_id = $oficina_id; }
+    public function getId() {                   return $this->id; }
+    public function getNombre() {               return $this->nombre; }
+    public function getOficinaId() {            return $this->oficina_id; }
 }
 ?>
