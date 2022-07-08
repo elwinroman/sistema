@@ -238,3 +238,38 @@ body.short footer {
 #crear-oficina fieldset > legend {
     font-size: 0.85rem;
 }
+
+/* Estilos los datatables */
+#lista-oficina {
+    overflow-x: auto;
+}
+.datatable > thead > tr > th,
+.datatable > tbody > tr > td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+.datatable tr .num-column,
+.datatable tr .link-column {
+    text-align: center;
+}
+.datatable > thead > tr > th {
+    font-weight: 600;
+}
+.datatable > tbody > tr > td.link-column > i {
+    position: relative;
+	cursor: pointer;
+	font-size: 1.3rem;
+	color: #25b343;
+}
+.datatable > tbody > tr > td.link-column:before {
+	/* background blanco al icono para aparentar una cruz blanca */
+	position: absolute;
+	content: "";
+    margin-left: 2px;
+    margin-top: 2px;
+    height: 13px;
+    width: 13px;
+    background-color: white;
+    border-radius: 50%;
+}
