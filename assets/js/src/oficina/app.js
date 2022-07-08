@@ -14,5 +14,8 @@ export default class App {
 
         // Habilita o desahabilita el select segpun el input-radio
         this.crear_oficina.enableDisableSelect();
+
+        // Despliega el dataTable con la lista de oficinas
+        this.listar_oficina.datatableOficina();
     }
 }

@@ -9,6 +9,7 @@ export default class DataTable {
         this.thead = this.dataTable.head;    // HTMLElement
         this.wrapper = this.dataTable.wrapper;
 
+        // añade estilos propios al datatable
         this.formatOwnStyles();
     }
 
@@ -35,12 +36,10 @@ export default class DataTable {
      * @param {Array} data select es la posición de la columna
      * @example [ { select: 0, width: "5%" },
      *            { select: 2, width: "50%" },
-     *            ...
-     *          ]
+     *            ... ]
      */
     setWidth(data) {
         data.forEach(element => {
-            // let th = this.head.querySelector("th:nth-child("+element.select+")");
             let th = this.thead.querySelector("tr > th:nth-child(" + (element.select+1) +")");
             th.style.width = element.width;
         });
@@ -50,14 +49,38 @@ export default class DataTable {
      * @param {Array} data select es la posici+ón de la columna
      * @example [ { select: 0, class: "class1" },
      *            { select: 2, class: "class2" },
-     *            ...
-     *          ]
+     *            ... ]
      */
     addClass(data) {
         data.forEach(element => {
             let th = this.thead.querySelector("tr > th:nth-child(" + (element.select+1) + ")");
             th.classList.add(element.class);
         });
+    }
+
+    /**
+     * Redirecciona para ver con más detalle al hacer click en (+)
+     * @param {string} url (controlador/action)
+     */
+     hrefLinkColumns(url) {
+
+        let redirect = function() {
+            let icon_list = this.wrapper.querySelectorAll(".datatable td.link-column > i");
+            
+            icon_list.forEach(icon => {
+                icon.addEventListener("click", function() {
+                    let id = this.dataset.id;
+                    location.href = window.URL_BASE + url + "&id=" + id;            
+                });
+            });
+        }
+
+        // Eventos de ejecución
+        this.dataTable.on('datatable.search', redirect);
+        this.dataTable.on('datatable.perPage', redirect);
+        this.dataTable.on('datatable.init', redirect);
+        this.dataTable.on('datatable.sort', redirect);
+        this.dataTable.on('datatable.page', redirect);
     }
 
     // Formatea estilos de simple-dataTable añadiendo clases propias

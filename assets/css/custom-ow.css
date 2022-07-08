@@ -54,6 +54,9 @@ input:focus-visible {
 .form-field-ow {
     margin-bottom: 15px;
 }
+table {
+    font-size: 0.85rem;
+}
 /* Box */
 .box-ow {
     border: 1px solid #d6cbcb;
