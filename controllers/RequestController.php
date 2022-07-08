@@ -13,7 +13,6 @@ class RequestController extends ControllerBase {
 
     // Función que controla el envío de la lista de oficinas jefe
     public function getOficinasJefe() {
-        $data = ["success"=>false];
         $_POST = json_decode(file_get_contents('php://input'), true);
         
         if(isset($_POST['request'])) {
@@ -24,6 +23,31 @@ class RequestController extends ControllerBase {
             else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
         } else {
             $this->redirect('error');
+        }
+    }
+
+    // Función que controle el envío de las lista de oficinas
+    public function getListaOficinas() {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        
+        if(isset($_POST['request'])) {
+            $oficina_model = $this->loadModel('oficina');
+            $res = $oficina_model->get_lista_oficinas();
+
+            // Formatear datos para la vista
+            if(count($res) > 0) {
+                $data = [];
+               
+                foreach($res as $row) {
+                    $data[] = array(
+                        "#"       => $row['nro'], 
+                        "Oficina" => $this->util->output_string($row['nombre']),
+                        "Ver"     => $row['id']);
+                }
+
+                die(json_encode($data));
+            }
+            else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
         }
     }
 }

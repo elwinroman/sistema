@@ -33,11 +33,26 @@ class OficinaModel extends ModelBase {
 
     /**
      * Función que devuelve una lista de oficinas jefe
-     * @return data Lista de oficinas jefe
+     * @return Array $data Lista de oficinas jefe
      */
     public function get_oficinas_jefe() {
         try {
             $sql = "SELECT id, nombre FROM oficinas WHERE oficina_id IS NULL ORDER BY nombre";
+            $query = $this->query($sql);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch(PDOException $e) {
+            return $e;
+        }
+    }
+
+    /**
+     * Función que devuelve la lista de oficinas
+     * @return Array $data Lista de oficinas
+     */
+    public function get_lista_oficinas() {
+        try {
+            $sql = "SELECT ROW_NUMBER() OVER(ORDER BY nombre) AS nro, nombre, id FROM oficinas";
             $query = $this->query($sql);
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;

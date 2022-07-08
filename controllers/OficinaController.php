@@ -32,8 +32,7 @@ class OficinaController extends ControllerBase {
                 #! Mensaje de error aqui
                 $this->redirect('oficina/formulario');
             }
-            var_dump($oficina_data);
-            die();
+
             // Proceso para insertar en la base de datos
             $oficina_model = $this->loadModel('oficina');
             $oficina_model->setNombre($oficina_data['nombre']);
@@ -56,6 +55,10 @@ class OficinaController extends ControllerBase {
 
     public function mostrar() {
         $this->view->render('oficina/mostrar-oficina');
+    }
+
+    public function listar() {
+        $this->view->render('oficina/lista-oficina');
     }
 
     /**
