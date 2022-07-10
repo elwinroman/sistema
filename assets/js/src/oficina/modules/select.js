@@ -1,7 +1,8 @@
-export default class CrearOficina {
+export default class Select {
     
     constructor() {
-        this.loaded = document.querySelector("#crear-oficina");
+        this.loadedNew = document.querySelector("#crear-oficina");
+        this.loadedEdit = document.querySelector("#editar-oficina-modal");
 
         this.select_oficina = document.querySelector('#form-oficina select[name="oficina-jefe"]');
         this.radioinput = {
@@ -12,7 +13,7 @@ export default class CrearOficina {
 
     // Habilita o deshabilita el select según el input-radio seleccionado
     enableDisableSelect() {
-        if(!this.loaded) return
+        if(!this.loadedNew && !this.loadedEdit) return;
 
         // Estado inicial del radio input
         if(this.radioinput.oficinajefe.checked)
@@ -34,7 +35,7 @@ export default class CrearOficina {
 
     // Carga en el select oficina-jefe una lista de las oficinas jefe
     selectLoadData() {
-        if(!this.loaded) return
+        if(!this.loadedNew && !this.loadedEdit) return;
         
         let data = { request: true };
         let url = "http://localhost/github/sistema/request/getOficinasJefe";
@@ -51,14 +52,39 @@ export default class CrearOficina {
                 let option = document.createElement("option");
                 option.text = data.mensaje;
                 this.select_oficina.add(option);
+                return;
             } else {
-                for(let i=0; i<data.length; i++) {
-                    let option = document.createElement("option");
-                    option.text = data[i].nombre;
-                    option.value = data[i].id;
-                    this.select_oficina.add(option);
-                }
+                // placeholder select si es para crear oficina o editar oficina jefe
+                if(!this.select_oficina.dataset.selected) this.addPlaceholder();
+                this.addOptionToSelect(data);
+                
             }
+
         }).catch(error => console.log(error.message));
+    }
+
+    /**
+     * Crea el objeto <option> y añade al select
+     * @param {Array} data Lista de oficinas jefes
+     */ 
+    addOptionToSelect(data) {
+        for(let i=0; i<data.length; i++) {
+            let option = document.createElement('option');
+            option.text = data[i].nombre;
+            option.value = data[i].id;
+
+            if(this.loadedEdit && this.select_oficina.dataset.selected == data[i].id) 
+                option.selected = true;
+
+            this.select_oficina.add(option);
+        }
+    }
+
+    addPlaceholder() {
+        let option = document.createElement('option');
+        option.text = 'Seleccione una opción';
+        option.selected = true;
+        option.setAttribute('hidden', 'hidden');
+        this.select_oficina.add(option);
     }
 }
