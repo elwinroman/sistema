@@ -1,13 +1,11 @@
 import CrearOficina from "./modules/crear-oficina.js";
 import ListarOficina from "./modules/listar-oficina.js";
-import MostrarOficina from "./modules/mostrar-oficina.js";
 
 // Carga los diferentes módulos del objeto layout
 export default class App {
     constructor() {
         this.crear_oficina = new CrearOficina();
         this.listar_oficina = new ListarOficina();
-        this.mostrarOficina = new MostrarOficina();
     }
 
     load() {
