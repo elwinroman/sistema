@@ -31,6 +31,23 @@ class OficinaModel extends ModelBase {
         }
     }
 
+    public function update() {
+        try {
+            $sql = "UPDATE oficinas SET nombre = :nombre, oficina_id = :oficina_id WHERE id = :id";
+            $query = $this->prepare($sql);
+            $query->execute([
+                'id'         => $this->id,
+                'nombre'     => $this->nombre,
+                'oficina_id' => $this->oficina_id
+            ]);
+
+            return $query;
+
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
+
     /**
      * Obtiene la tabla oficina
      */
@@ -84,8 +101,9 @@ class OficinaModel extends ModelBase {
 
     public function get_oficina_jefe() {
         try {
-            $sql = "SELECT nombre FROM oficinas WHERE oficina_id = $this->oficina_id LIMIT 1";
-            $query = $this->query($sql);
+            $sql = "SELECT nombre FROM oficinas WHERE id = :id LIMIT 1";
+            $query = $this->prepare($sql);
+            $query->execute([ 'id' => $this->oficina_id]);
             
             $oficinaJefe = $query->fetch(PDO::FETCH_ASSOC);
             return $oficinaJefe;
@@ -108,6 +126,7 @@ class OficinaModel extends ModelBase {
         }
     }
     
+    public function setId($id) {                $this->id = $id; }
     public function setNombre($nombre) {        $this->nombre = $nombre; }
     public function setOficinaId($oficina_id) { $this->oficina_id = $oficina_id; }
     public function getId() {                   return $this->id; }

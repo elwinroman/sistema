@@ -1,7 +1,7 @@
 <div id="crear-oficina">
 	<h1 class="weigth-500-ow">Crear oficina</h1>
     <div class="box-ow">
-        <form id="form-oficina" autocomplete="off" action="<?=URL_BASE?>oficina/crear" method="POST">
+        <form id="form-oficina" autocomplete="off" action="<?=URL_BASE?>oficina/createorupdate&operation=new" method="POST">
 			<h6 class="">Datos de la oficina</h6>
 			<div class="form-field-ow">		<!-- Field NOMBRE -->
 				<label for="nombre" class="weigth-500-ow">Nombre</label>

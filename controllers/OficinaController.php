@@ -14,10 +14,8 @@ class OficinaController extends ControllerBase {
         $this->view->render('oficina/crear-oficina');
     }
 
-    public function crear() {
-        $params = ['nombre', 'tipo-oficina'];
-
-        if($this->existsPOST($params)) {
+    public function createorupdate() {
+        if($this->existsPOST(['nombre', 'tipo-oficina']) && isset($_GET['operation'])) {
             // Tratamiento de los datos (normalizar)
             $oficina_data = array(
                 'nombre'       => $this->util->limpiar_cadena($_POST['nombre']),
@@ -37,10 +35,16 @@ class OficinaController extends ControllerBase {
             $oficina_model = $this->loadModel('oficina');
             $oficina_model->setNombre($oficina_data['nombre']);
             $oficina_model->setOficinaId($oficina_data['oficina_id']);
-            $res = $oficina_model->insert();
+            
+            if($_GET['operation'] == 'new')         // crea oficina
+                $result = $oficina_model->insert();
+            else if($_GET['operation'] == 'edit') {  // edita oficina                                
+                $oficina_model->setId($_GET['id']);
+                $result = $oficina_model->update();
+            }
 
             // Devolución de resultados
-            if($res) {
+            if($result) {
                 $id = $oficina_model->getId();
                 #! Mensaje de success aqui
                 $this->redirect('oficina/mostrar&id='.$id);
@@ -61,7 +65,8 @@ class OficinaController extends ControllerBase {
             if($oficina->get($id)) {
                 $this->view->data = [
                     'id'         => $oficina->getId(),
-                    'nombre'     => $this->util->output_string($oficina->getNombre())
+                    'nombre'     => $this->util->output_string($oficina->getNombre()),
+                    'oficina_id' => $oficina->getOficinaId()
                 ];
                 
                 // obtiene oficina_jefe (si es suboficina)

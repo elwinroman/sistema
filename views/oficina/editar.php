@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal" id="editar-oficina-modal" aria-hidden="true">
+<div id="editar-oficina-modal" class="modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal">x</button>
             </div>
             <div class="modal-body">
-                <form id="form-oficina" autocomplete="off" action="<?=URL_BASE?>oficina/editar" method="POST">
+                <form id="form-oficina" autocomplete="off" action="<?=URL_BASE?>oficina/createorupdate&operation=edit&id=<?=$this->data['id']?>" method="POST">
                     <h6 class="">Datos de la oficina</h6>
                     <div class="form-field-ow">		<!-- Field NOMBRE -->
                         <label for="nombre" class="weigth-500-ow">Nombre</label>
@@ -34,7 +34,7 @@
 
                     <div class="form-field-ow">		<!-- Field OFICINA-JEFE -->
                         <label for="oficina-jefe" class="weigth-500-ow">Oficina jefe</label><br>
-                        <select name="oficina-jefe" class="input-ow"></select>
+                        <select name="oficina-jefe" class="input-ow" data-selected="<?= $this->data['oficina_id'] ?>"></select>
                     </div>
                     <div>
                         <button type="submit" class="btn-ow btn-ow-primary">Guardar</button>
