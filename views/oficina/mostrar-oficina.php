@@ -5,7 +5,11 @@
             <i class="zmdi zmdi-assignment zmdi-hc-4x mb-3"></i>
             <h6 class="mb-3"><?= $this->data['nombre'] ?></h6>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, quisquam?</p>
-            <button class="btn-ow btn-ow-orange">Editar</button>
+            
+            <!-- Button activador modal editar oficina -->
+            <button class="btn-ow btn-ow-orange" data-bs-toggle="modal" data-bs-target="#editar-oficina-modal">
+                Editar
+            </button>
         </div>
 
         <div class="ofic-card-cargo col-md-4 col-sm-6">
@@ -27,3 +31,5 @@
         </div>
     </div>
 </div>
+
+<?php require 'editar.php'; ?>
