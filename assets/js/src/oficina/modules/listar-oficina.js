@@ -2,11 +2,16 @@ import DataTable from './../../util/datatable.util.js';
 export default class ListarOficina {
 
     constructor() {
+        this.loaded = document.querySelector("#lista-oficina");
+
         this.table = document.querySelector("#lista-oficina table#datatable-oficina");
         this.dt = undefined;
     }
 
     datatableOficina() {
+        
+        if(!this.loaded)  return;
+
         // propiedades del dataTable
         let columns = [
             { 

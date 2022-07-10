@@ -238,11 +238,27 @@ body.short footer {
 #crear-oficina fieldset > legend {
     font-size: 0.85rem;
 }
+/* Estilos para mostrar oficinas */
+.ofic-card {
+    font-size: 0.85rem;
+    padding: 0;
+}
+.ofic-card > div {
+    padding: 20px;
+}
+.ofic-card .ofic-card-info {
+    color: white;
+    background: #3F448C;
+}
+.ofic-card .ofic-card-cargo {
+    border-right: 1px solid #e6e6e6;
+}
 
-/* Estilos los datatables */
 #lista-oficina {
     overflow-x: auto;
 }
+
+/* Estilos para los datatables */
 .datatable > thead > tr > th,
 .datatable > tbody > tr > td {
     padding: 8px 10px;

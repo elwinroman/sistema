@@ -1,6 +1,8 @@
 export default class CrearOficina {
     
     constructor() {
+        this.loaded = document.querySelector("#crear-oficina");
+
         this.select_oficina = document.querySelector('#form-oficina select[name="oficina-jefe"]');
         this.radioinput = {
             oficinajefe: document.querySelector('#form-oficina input#oficinajefe[type="radio"]'),
@@ -10,6 +12,8 @@ export default class CrearOficina {
 
     // Habilita o deshabilita el select según el input-radio seleccionado
     enableDisableSelect() {
+        if(!this.loaded) return
+
         // Estado inicial del radio input
         if(this.radioinput.oficinajefe.checked)
             this.select_oficina.disabled = true;
@@ -30,6 +34,8 @@ export default class CrearOficina {
 
     // Carga en el select oficina-jefe una lista de las oficinas jefe
     selectLoadData() {
+        if(!this.loaded) return
+        
         let data = { request: true };
         let url = "http://localhost/github/sistema/request/getOficinasJefe";
         fetch(url, {

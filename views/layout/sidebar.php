@@ -34,7 +34,7 @@
                 </div>
                 <div class="submenu-link">
                     <i class="submenu-icon zmdi zmdi-circle"></i>
-                    <a class="submenu-label">Subitem 2</a>
+                    <a class="submenu-label" href="<?=URL_BASE?>oficina/listar">Lista Oficina</a>
                 </div>
             </div>
         </div>

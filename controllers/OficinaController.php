@@ -54,7 +54,41 @@ class OficinaController extends ControllerBase {
     }
 
     public function mostrar() {
-        $this->view->render('oficina/mostrar-oficina');
+        if(isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $oficina = $this->loadModel('oficina');
+
+            if($oficina->get($id)) {
+                $this->view->data = [
+                    'id'         => $oficina->getId(),
+                    'nombre'     => $this->util->output_string($oficina->getNombre())
+                ];
+                
+                // obtiene oficina_jefe (si es suboficina)
+                if($oficina->getOficinaId() != null) {
+                    $this->view->tipoOficina = "OFICINA JEFE";
+                    $oficinaJefe = $oficina->get_oficina_jefe();
+                    
+                    $this->view->oficina = $this->util->output_string($oficinaJefe['nombre']);
+
+                // obtiene suboficinas (si es oficina jefe)
+                } else {
+                    $this->view->tipoOficina = "SUBOFICINAS";
+                    $suboficinas = $oficina->get_suboficinas();
+
+                    if(count($suboficinas) > 0) {
+                        foreach($suboficinas as $sub) {
+                            $this->view->oficina[] = array('nombre' => $this->util->output_string($sub['nombre']));
+                        }
+
+                    } else
+                        $this->view->oficina = "No hay suboficinas registradas todavía";
+                }
+
+                $this->view->render('oficina/mostrar-oficina');
+
+            } else  $this->redirect('');
+        }
     }
 
     public function listar() {
