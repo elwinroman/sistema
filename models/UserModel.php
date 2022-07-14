@@ -1,7 +1,6 @@
 <?php
 
 class UserModel extends ModelBase {
-    
     private $username, $password, $role;
 
     public function __construct() {
@@ -10,7 +9,7 @@ class UserModel extends ModelBase {
 
     public function get($username) {
         try {
-            $sql = "SELECT * FROM usuarios WHERE username=:username";
+            $sql = "SELECT * FROM usuarios WHERE username = :username";
             $query = $this->prepare($sql);
             $query->execute([
                 ':username' => $username
@@ -23,6 +22,7 @@ class UserModel extends ModelBase {
                 return true;
             }
             return false;
+            
         } catch(PDOException $e) {
             echo $e;
         }

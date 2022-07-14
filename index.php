@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once 'classes/session.php';
 require_once 'classes/utils.php';
@@ -10,7 +11,7 @@ require_once 'core/controller.php';
 require_once 'core/model.php';
 require_once 'core/app.php';
 
-// Cargar el controlador frontal
+// carga el controlador frontal
 $app = new App();
 
 ?>

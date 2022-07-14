@@ -32,4 +32,4 @@
     </div>
 </div>
 
-<?php require 'editar.php'; ?>
+<?php require 'edit.php'; ?>

@@ -5,3 +5,5 @@ vendor/*
 tests/*.php
 composer.json
 composer.lock
+libs
+views/layout/header.offline.php

@@ -1,5 +1,6 @@
-export default class DataTable {
+import {DataTable as SimpleDataTable} from "../../../../libs/simple-datatable-3.2.0/js/simple-datatable.js";
 
+export default class DataTable {
     constructor(table, data, columns) {
         this.table = table;     // HTMLElement
         this.data = data;
@@ -14,7 +15,7 @@ export default class DataTable {
     }
 
     new() {
-        return new simpleDatatables.DataTable(this.table, {
+        return new SimpleDataTable(this.table, {
             // Opciones predeterminadas
             labels        : {
                 placeholder : "Buscar...",
@@ -26,8 +27,7 @@ export default class DataTable {
             fixedHeight   : false,
             fixedColumns  : false,
             columns       : this.columns,
-            data          : this.data,
-            perPage : 5
+            data          : this.data
         });
     }
 
@@ -45,13 +45,13 @@ export default class DataTable {
         });
     }
     /**
-     * Añade clases a las columnas (<thead>)
+     * Añade clases a los encabezados de las columnas (<thead>)
      * @param {Array} data select es la posici+ón de la columna
      * @example [ { select: 0, class: "class1" },
      *            { select: 2, class: "class2" },
      *            ... ]
      */
-    addClass(data) {
+    addClassToHead(data) {
         data.forEach(element => {
             let th = this.thead.querySelector("tr > th:nth-child(" + (element.select+1) + ")");
             th.classList.add(element.class);
@@ -60,24 +60,23 @@ export default class DataTable {
 
     /**
      * Redirecciona para ver con más detalle al hacer click en (+)
-     * @param {string} url (controlador/action)
+     * @param {string} url
      */
      hrefLinkColumns(url) {
-
         let redirect = function() {
-            let icon_list = this.wrapper.querySelectorAll(".datatable td.link-column > i");
+            let icon_list = this.wrapper.querySelectorAll(".datatable-ow td.link-column > i");
             
             icon_list.forEach(icon => {
                 icon.addEventListener("click", function() {
                     let id = this.dataset.id;
-                    location.href = window.URL_BASE + url + "&id=" + id;            
+                    location.href = url + "&id=" + id;     
                 });
             });
         }
 
-        // Eventos de ejecución
+        // eventos de ejecución
         this.dataTable.on('datatable.search', redirect);
-        this.dataTable.on('datatable.perPage', redirect);
+        this.dataTable.on('datatable.perpage', redirect);
         this.dataTable.on('datatable.init', redirect);
         this.dataTable.on('datatable.sort', redirect);
         this.dataTable.on('datatable.page', redirect);
@@ -86,19 +85,17 @@ export default class DataTable {
     // Formatea estilos de simple-dataTable añadiendo clases propias
     formatOwnStyles() {
         let dataTableTop = this.wrapper.querySelector(".dataTable-top");
-        let dataTableBottom = this.wrapper.querySelector(".dataTable-bottom");
         let searchInput = dataTableTop.querySelector(".dataTable-search input.dataTable-input");
         let selectDropdown = dataTableTop.querySelector(".dataTable-dropdown select.dataTable-selector");
 
-        searchInput.classList.add("input-ow");
+        // dataTableTop.classList.add('d-flex', 'justify-content-around');
+        
+        searchInput.classList.add('input-ow');
 
-        dataTableTop.style.fontSize = "0.85rem";
-        dataTableBottom.style.fontSize = "0.85rem";
-
-        selectDropdown.classList.add("input-ow");
-        selectDropdown.style.width = "45px";
-        selectDropdown.style.display = "inline-block";
-        selectDropdown.style.paddingLeft = "2px";
-        selectDropdown.style.paddingRight = "0";
+        selectDropdown.classList.add('input-ow');
+        selectDropdown.style.width = '45px';
+        selectDropdown.style.display = 'inline-block';
+        selectDropdown.style.paddingLeft = '2px';
+        selectDropdown.style.paddingRight = '0';
     }
 }

@@ -1,21 +1,18 @@
 <?php
 
-class SessionStorage {
+class Session {
     private $username = 'username';
     private $role = 'role';
 
     public function __construct() {
-        // if(session_status() == PHP_SESSION_NONE) {
-        //     session_start();
-        // }
     }
 
-    public function accesoAutorizado() {
+    public function isLoggedIn() {
         return isset($_SESSION[$this->username]);
     }
 
     // Elimina las sesiones
-    public function closeSession() {
+    public function close() {
         session_unset();
         session_destroy();
     }

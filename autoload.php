@@ -1,10 +1,9 @@
 <?php 
 
 /**
- * Función que carga automáticamente N controladores que existen
+ * Carga automáticamente todos los controladores que existen
  * en la carpeta /controllers/.
- * 
- * @param{String} $nombre_clase     Nombre del archivo de los controladores
+ * @param String $nombre_clase     Nombre del archivo de los controladores
  */
 function autoload($nombre_clase) {
     $archivo = 'controllers/' . $nombre_clase . '.php';
@@ -13,5 +12,4 @@ function autoload($nombre_clase) {
 }
 
 spl_autoload_register('autoload');
-
 ?>

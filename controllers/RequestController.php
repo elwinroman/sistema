@@ -1,54 +1,67 @@
 <?php
 
-// Clase que controla todas las peticionas Ajax desde Javascript
-class RequestController extends ControllerBase {
-    
+// Clase que controla todas las peticionas hechas desde Javascript
+class RequestController extends ControllerBase {    
     public function __construct() {
         parent::__construct();
 
-        // Redirecciona cuando el usuario no está autorizado
-        if(!$this->session->accesoAutorizado())
+        if(!$this->session->isLoggedIn()) {
             $this->redirect('');
+            return;
+        }
     }
 
-    // Función que controla el envío de la lista de oficinas jefe
-    public function getOficinasJefe() {
+    // Controla el envío de la lista de oficinas jefe
+    public function getoficinasjefe() {
         $_POST = json_decode(file_get_contents('php://input'), true);
         
-        if(isset($_POST['request'])) {
-            $oficina_model = $this->loadModel('oficina');
-            $data = $oficina_model->get_oficinas_jefe();
-
-            if(count($data) > 0) die(json_encode($data));
-            else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
-        } else {
+        if(!isset($_POST['request'])) {
             $this->redirect('error');
+            return;
         }
+
+        $oficina = $this->loadModel('oficina');
+        $res = $oficina->getoficinasjefe();
+
+        if(count($res) > 0) {
+            $data = [];
+
+            foreach($res as $row) {
+                $data[] = array(
+                    'id'      => $row['id'], 
+                    'nombre'  => $this->util->output_string($row['nombre']));
+            }
+            die(json_encode($data));
+
+        } else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
     }
 
-    // Función que controle el envío de las lista de oficinas
-    public function getListaOficinas() {
+    // Controla el envío de las lista de todas las oficinas
+    public function getoficinas() {
         $_POST = json_decode(file_get_contents('php://input'), true);
         
-        if(isset($_POST['request'])) {
-            $oficina_model = $this->loadModel('oficina');
-            $res = $oficina_model->get_lista_oficinas();
-
-            // Formatear datos para la vista
-            if(count($res) > 0) {
-                $data = [];
-               
-                foreach($res as $row) {
-                    $data[] = array(
-                        "#"       => $row['nro'], 
-                        "Oficina" => $this->util->output_string($row['nombre']),
-                        "Ver"     => $row['id']);
-                }
-
-                die(json_encode($data));
-            }
-            else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
+        if(!isset($_POST['request'])) {
+            $this-> redirect('error');
+            return;
         }
+        
+        $oficina = $this->loadModel('oficina');
+        $res = $oficina->getAll();
+
+        // formatea datos para la vista
+        if(count($res) > 0) {
+            $data = [];
+            
+            foreach($res as $row) {
+                $data[] = array(
+                    '#'       => $row['nro'], 
+                    'Oficina' => $this->util->output_string($row['nombre']),
+                    'Chief'   => $this->util->output_string($row['oficina_jefe']),
+                    'Ver'     => $row['id']);
+            }
+            die(json_encode($data));
+
+        } else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
     }
 }
 ?>

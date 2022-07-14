@@ -1,21 +1,21 @@
 import SelectHandler from "./modules/select.js";
-import ListarOficina from "./modules/listar-oficina.js";
+import ListPage from "./modules/list.js";
 
 // Carga los diferentes módulos del objeto layout
 export default class App {
     constructor() {
         this.selecthandler = new SelectHandler();
-        this.listar_oficina = new ListarOficina();
+        this.listPage = new ListPage();
     }
 
     load() {
-        // Carga datos mediante ajax en el select oficina-jefe
+        // carga datos mediante ajax en el select oficina-jefe
         this.selecthandler.selectLoadData();
 
-        // Habilita o desahabilita el select segpun el input-radio
+        // habilita o desahabilita el select segpun el input-radio
         this.selecthandler.enableDisableSelect();
 
-        // Despliega el dataTable con la lista de oficinas
-        this.listar_oficina.datatableOficina();
+        // despliega el dataTable con la lista de oficinas
+        this.listPage.datatableOficina();
     }
 }

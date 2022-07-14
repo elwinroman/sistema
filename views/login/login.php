@@ -10,7 +10,7 @@
                 <label class="weigth-500-ow" for="password">Contraseña</label>
                 <input class="input-ow" type="password" name="password" required>
             </div>
-            <button type="submit" class="btn-ow btn-ow-primary">Iniciar sesión</button>
+            <button type="submit" class="btn-ow btn-ow-blue">Iniciar sesión</button>
         </form>
     </div>
 </div>

@@ -3,20 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-:root {
-    /* medidas */
-    --navbar-height: 70px;
-    --sidebar-width: 250px;
-    --sidebar-short-width: 80px;
-    --menu-link-height: 45px; 
-    --footer-height: 80px;
-    
-    /* colores */
-    --color-primary: #1465BB;
-    --color-platinum: #E2E2E2;
-    --color-font-body: #212529;
-    --color-input-placeholder: #5f6b70;
-}
 
 /* Estilos para el navbar */
 .mynavbar {
@@ -28,10 +14,9 @@
     align-items: center;
     padding: 0 10px;
     gap: 10px;
-    box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
     font-family: 'Poppins', Helvetica, sans-serif;
-
-    background: var(--color-primary);
+    font-size: var(--font-size-default);
+    background: #082338;
     color: white;
 }
 .mynavbar > div.logo {
@@ -40,9 +25,6 @@
 .mynavbar .toggle-sidebar {
     cursor: pointer;
     font-size: 1.25rem;
-}
-.mynavbar .user-mode {
-    font-size: 0.85rem;
 }
 
 /* Agrupa el contenido principal y footer */
@@ -61,21 +43,20 @@ main {
     height: calc(100vh - var(--navbar-height));
     display: flex;
     flex-direction: column;
-    font-family: 'Poppins', Helvetica, sans-serif;
     gap: 10px;
     transition: width 200ms;
-
-    background: #EDFFFA;
+    user-select: none;
+    font-family: 'Poppins', Helvetica, sans-serif;
     border-right: 1px solid var(--color-platinum);
+    background: white;
+    color: var(--color-font-body);
 }
 /* Menu */
 .sidebar .menu-sidebar {
     flex-grow: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    font-size: 0.85rem;
-    
-    color: #646464;
+    font-size: var(--font-size-default);
 }
 .menu-panel > .menu-link {
     cursor: pointer;
@@ -84,13 +65,12 @@ main {
     align-items: center;
     gap: 12px;
     padding: 0 16px;
-    margin: 0 12px;
-    border-radius: 6px;
-    transition: background 200ms, color 200ms;
+    margin: 5px 0;
+    transition: all 200ms;
 }
+.menu-panel.active > .menu-link,
 .menu-panel > .menu-link:hover {
-    background: #6091D8;
-    color: white;
+    background: var(--color-platinum);
 }
 .menu-link > i.menu-icon {
     width: 20px;
@@ -124,20 +104,22 @@ main {
     transition: color 200ms;
 }
 .submenu-panel .submenu-link:hover {
-    color: #3673c5;
+    color: var(--color-blue);
 }
 .submenu-link .submenu-icon {
     font-size: 6px;
 }
-
+ 
 /* Estilos para las vistas */
 .content {
     width: calc(100% - var(--sidebar-width));
-    padding: 20px;
+    padding: 30px;
     margin-bottom: var(--footer-height);
     margin-left: var(--sidebar-width);
     transition: margin-left 200ms, width 200ms;
     font-family: 'Poppins', Helvetica, sans-serif;
+    background: #F3F3F3;
+    color: var(--color-font-body);
 }
 
 /* Estilos para el footer */
@@ -151,8 +133,9 @@ footer {
     font-size: 0.85rem;
     transition: margin-left 200ms, width 200ms;
 
-    background-color: #0e0e0e;
-    color: white;
+    color: var(--color-font-body);
+    background-color: white;
+    border-top: 1px solid var(--color-platinum);
 }
 
 /* SHORT */
@@ -233,18 +216,21 @@ body.short footer {
     font-size: 0.85rem;
 }
 #crear-oficina form {
-    width: 50%;
+    border-right: 1px solid var(--color-platinum);
 }
 #crear-oficina fieldset > legend {
     font-size: 0.85rem;
 }
+#crear-oficina .btn-ow {
+    width: 80px;
+}
+
 /* Estilos para mostrar oficinas */
 .ofic-card {
     font-size: 0.85rem;
-    padding: 0;
 }
 .ofic-card > div {
-    padding: 20px;
+    padding: 30px;
 }
 .ofic-card .ofic-card-info {
     color: white;
@@ -254,38 +240,35 @@ body.short footer {
     border-right: 1px solid #e6e6e6;
 }
 
+/* Estilos para la lista de oficinas */
 #lista-oficina {
     overflow-x: auto;
+    font-size: 0.85rem;
+}
+#lista-oficina .wrapper-chief {
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: white;
+    background: #5a61bd;
 }
 
-/* Estilos para los datatables */
-.datatable > thead > tr > th,
-.datatable > tbody > tr > td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #e0e0e0;
-    vertical-align: middle;
+/* Reescribiendo estilos de simpleDataTables */
+.dataTable-sorter::after,
+.dataTable-sorter::before {
+	border: none;	/* delete chevron arrow */
+	opacity: 0.5;
 }
-.datatable tr .num-column,
-.datatable tr .link-column {
-    text-align: center;
+.dataTable-sorter::after {
+	content: "\2191";
+	right: 10px;
+	top: -2px;
 }
-.datatable > thead > tr > th {
-    font-weight: 600;
+.dataTable-sorter::before { 
+	content: "\2193";
+	right: 4px;
+	bottom: 23px;
 }
-.datatable > tbody > tr > td.link-column > i {
-    position: relative;
-	cursor: pointer;
-	font-size: 1.3rem;
-	color: #25b343;
-}
-.datatable > tbody > tr > td.link-column:before {
-	/* background blanco al icono para aparentar una cruz blanca */
-	position: absolute;
-	content: "";
-    margin-left: 2px;
-    margin-top: 2px;
-    height: 13px;
-    width: 13px;
-    background-color: white;
-    border-radius: 50%;
-}
+.asc .dataTable-sorter::after,
+.desc .dataTable-sorter::before { opacity: 1; }
+.num-column .dataTable-sorter::before,
+.num-column .dataTable-sorter::after { opacity: 0; }

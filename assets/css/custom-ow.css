@@ -1,31 +1,57 @@
+:root {
+    /* medidas */
+    --navbar-height: 70px;
+    --sidebar-width: 250px;
+    --sidebar-short-width: 80px;
+    --menu-link-height: 45px; 
+    --footer-height: 80px;
+    
+    /* colores */
+    --color-blue: #1465BB;
+    --color-platinum: #E2E2E2;
+    --color-font-body: #3c3c3c;
+    --color-input-placeholder: #5f6b70;
+
+    /* font */
+    --font-size-default: 0.85rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 /* Button */
 .btn-ow {
     height: 30px;
     line-height: 30px;
     padding: 0 0.5rem;
-    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    outline: none;
+    user-select: none;
+    box-shadow: 1px 1px 6px 0 rgb(0 0 0 / 20%);
     border-radius: 4px;
     transition: all 300ms;
     font-size: 0.85rem !important;
 }
-.btn-ow-primary {
-    background: var(--color-primary);
+.btn-ow-blue {
+    background: #0A5CB8;
     color: white;
     border: 1px solid var(--color-primary);
 }
 .btn-ow-primary:hover {
-    background: #003785;
-    border: 1px solid #003785;
+    background: #2174D4;
+    border: 1px solid #2174D4;
 }
 .btn-ow-orange {
-    background: #e9791a;
+    background: #E9791A;
     color: white;
-    border: 1px solid #e9791a;
+    border: 1px solid #E9791A;
 }
 .btn-ow-orange:hover {
-    background: #ff9a3e;
-    border: 1px solid #ff9a3e;
+    background: #FF9A3E;
+    border: 1px solid #FF9A3E;
 }
+
 /* Input */
 .input-ow {
     display: block;
@@ -49,6 +75,7 @@
     color: var(--color-input-placeholder);
 }
 
+/* Select */
 select:disabled {
     color: #ced4da;
     border-color: #ced4da;
@@ -56,21 +83,65 @@ select:disabled {
 select:disabled:hover {
     border-color: #ced4da;
 }
+
 input:focus-visible {
     outline: none;
 }
 .form-field-ow {
     margin-bottom: 15px;
 }
-table {
-    font-size: 0.85rem;
-}
+
 /* Box */
 .box-ow {
-    border: 1px solid #e9e9e9;
-    padding: 20px 26px 20px 26px;
-    box-shadow: 0 4px 15px -2px rgb(0 0 0 / 15%);
+    border: none;
+    box-shadow: 1px 5px 10px -2px rgb(0 0 0 / 20%);
+    background: white;
+    margin-bottom: 10px;
 }
+.box-ow > .box-ow-title {
+    padding: 20px 30px;
+    background: linear-gradient(90deg, #009b94 0%, #01cbc2 100%);
+    color: white;
+}
+.box-ow > .box-ow-body {
+    padding: 20px 30px 30px 30px;
+}
+
+/* DataTables */
+.datatable-ow > thead > tr > th,
+.datatable-ow > tbody > tr > td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+.datatable-ow tr .num-column,
+.datatable-ow tr .link-column {
+    text-align: center;
+}
+.datatable-ow > thead > tr > th {
+    font-weight: 600;
+}
+.datatable-ow > tbody > tr > td.link-column > i {
+    position: relative;
+	cursor: pointer;
+	font-size: 1.3rem;
+    transition: all 200ms;
+	color: #25b343;
+}
+.datatable-ow > tbody > tr > td.link-column > i:hover {
+    color: #009929;
+}
+.datatable-ow > tbody > tr > td.link-column:before {
+	position: absolute;
+	content: "";
+    margin-left: 2px;
+    margin-top: 2px;
+    height: 13px;
+    width: 13px;
+    background-color: white;    /* background blanco al icono para aparentar una cruz blanca */
+    border-radius: 50%;
+}
+
 /* Utils */
 .weigth-500-ow {
     font-weight: 500;

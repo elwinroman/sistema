@@ -1,38 +1,43 @@
 <?php
 
-class LoginController extends ControllerBase {
-    
+class LoginController extends ControllerBase {    
     public function __construct() {
         parent::__construct();
     }
 
     public function index() {
-        // Se muestra solo cuando el usuario no está logueado
-        if($this->session->accesoAutorizado())
+        // se muestra el login solo cuando el usuario no está logueado
+        if($this->session->isLoggedIn()) {
             $this->redirect('');
+            return;
+        }
 
         $this->view->render_login();
     }
 
     public function autenticar() {
-        $params = ['username', 'password'];
-        
-        if($this->existsPOST($params)) {
-            $user_model = $this->loadModel('user');
-            
-            // Existe el usuario y su contraseña es correcta
-            if($user_model->get($_POST['username']) && $_POST['password'] == $user_model->getPassword()) {
-                $this->session->setUsername($user_model->getUsername());
-                $this->session->setRole($user_model->getRole());
-                $this->redirect('');
-            } else
-                $this->redirect('');
-        } else
+        if(!$this->existsPOST(['username', 'password'])) {
             $this->redirect('');
+            return;
+        }
+        
+        $user = $this->loadModel('user');
+            
+        // existe el usuario y su contraseña es correcta
+        if($user->get($_POST['username']) && $_POST['password'] == $user->getPassword()) {
+            $this->session->setUsername($user->getUsername());
+            $this->session->setRole($user->getRole());
+            
+            $this->redirect('');
+            return;
+        } else {
+            $this->redirect('');
+            return;
+        }
     }
 
     public function close() {
-        $this->session->closeSession();
+        $this->session->close();
         $this->redirect('');
     }
 }

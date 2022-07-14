@@ -1,9 +1,8 @@
 <?php
 
 class Util {
-    
     /**
-     * Función que elimina espacios en blanco entre words dejando one, elimina espacios en blanco
+     * Elimina espacios en blanco entre words dejando one, elimina espacios en blanco
      * de los extremos y convierte a minúsculas
      * @param  String $cadena
      * @return String $nueva_cadena

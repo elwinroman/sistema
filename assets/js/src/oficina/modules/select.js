@@ -1,5 +1,6 @@
+import CONFIG from "./../../../config.js";
+
 export default class Select {
-    
     constructor() {
         this.loadedNew = document.querySelector("#crear-oficina");
         this.loadedEdit = document.querySelector("#editar-oficina-modal");
@@ -15,18 +16,18 @@ export default class Select {
     enableDisableSelect() {
         if(!this.loadedNew && !this.loadedEdit) return;
 
-        // Estado inicial del radio input
+        // estado inicial del radio input
         if(this.radioinput.oficinajefe.checked)
             this.select_oficina.disabled = true;
         if(this.radioinput.suboficina.checked)
             this.select_oficina.disabled = false;
         
-        // Deshabilita el select (cuando se crea una oficina jefe)
+        // deshabilita el select (cuando se crea una oficina jefe)
         this.radioinput.oficinajefe.addEventListener("change", () => {
             if(this.radioinput.oficinajefe.checked)
                 this.select_oficina.disabled = true;
         });
-        // Habilita el select (cuando se crea una suboficina)
+        // habilita el select (cuando se crea una suboficina)
         this.radioinput.suboficina.addEventListener("change", () => {
             if(this.radioinput.suboficina.checked)
                 this.select_oficina.disabled = false;
@@ -38,14 +39,11 @@ export default class Select {
         if(!this.loadedNew && !this.loadedEdit) return;
         
         let data = { request: true };
-        let url = "http://localhost/github/sistema/request/getOficinasJefe";
+        let url = CONFIG.url_base + "request/getoficinasjefe";
+
         fetch(url, {
             method  : 'POST',
-            body    : JSON.stringify(data),
-            headers : {
-                'Accept'       : 'aplication/json',
-                'Content-Type' : 'aplication/json'
-            }
+            body    : JSON.stringify(data)
         }).then(response => response.json()).then(data => {
             // Si no existen datos
             if(data.error) {

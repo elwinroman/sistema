@@ -30,11 +30,11 @@
             <div class="submenu-panel">
                 <div class="submenu-link">
                     <i class="submenu-icon zmdi zmdi-circle"></i>
-                    <a class="submenu-label" href="<?=URL_BASE?>oficina/formulario">Crear Oficina</a>
+                    <a class="submenu-label" href="<?=URL_BASE?>oficina/new">Crear Oficina</a>
                 </div>
                 <div class="submenu-link">
                     <i class="submenu-icon zmdi zmdi-circle"></i>
-                    <a class="submenu-label" href="<?=URL_BASE?>oficina/listar">Lista Oficina</a>
+                    <a class="submenu-label" href="<?=URL_BASE?>oficina/list">Lista Oficina</a>
                 </div>
             </div>
         </div>

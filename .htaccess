@@ -1,5 +1,4 @@
 # Rutas amigables
-
 <IfModule mod_rewrite.c>
 # Activar mod_rewrite
 RewriteEngine On

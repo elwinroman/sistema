@@ -1,7 +1,6 @@
 <?php
 
 class OficinaModel extends ModelBase {
-    
     private $id;
     private $oficina_id;
     private $nombre;
@@ -26,6 +25,7 @@ class OficinaModel extends ModelBase {
                 return true;
             }
             return false;
+
         } catch(PDOException $e) {
             echo $e;
         }
@@ -49,11 +49,13 @@ class OficinaModel extends ModelBase {
     }
 
     /**
-     * Obtiene la tabla oficina
+     * Obtiene una oficina y setea los datos
+     * @param  String $id
+     * @return Bool
      */
     public function get($id) {
         try {
-            $sql = "SELECT * FROM oficinas WHERE id=:id";
+            $sql = "SELECT * FROM oficinas WHERE id = :id";
             $query = $this->prepare($sql);
             $query->execute([':id' => $id]);
 
@@ -69,37 +71,36 @@ class OficinaModel extends ModelBase {
             echo $e;
         }
     }
-    /**
-     * Función que devuelve una lista de oficinas jefe
-     * @return Array $data Lista de oficinas jefe
-     */
-    public function get_oficinas_jefe() {
+
+    public function getAll() {
         try {
-            $sql = "SELECT id, nombre FROM oficinas WHERE oficina_id IS NULL ORDER BY nombre";
+            $sql = "SELECT ROW_NUMBER() OVER(ORDER BY nombre) AS nro, sub.id, sub.nombre, chief.nombre AS oficina_jefe
+                    FROM oficinas AS sub LEFT JOIN oficinas AS chief ON sub.oficina_id = chief.id";
             $query = $this->query($sql);
+            
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
+
         } catch(PDOException $e) {
             echo $e;
         }
     }
 
-    /**
-     * Función que devuelve la lista de oficinas
-     * @return Array $data Lista de oficinas
-     */
-    public function get_lista_oficinas() {
+    // Devuelve una lista de oficinas jefe
+    public function getoficinasjefe() {
         try {
-            $sql = "SELECT ROW_NUMBER() OVER(ORDER BY nombre) AS nro, nombre, id FROM oficinas";
+            $sql = "SELECT id, nombre FROM oficinas WHERE oficina_id IS NULL ORDER BY nombre";
             $query = $this->query($sql);
+         
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
+
         } catch(PDOException $e) {
-            return $e;
+            echo $e;
         }
     }
 
-    public function get_oficina_jefe() {
+    public function get_oficinajefe() {
         try {
             $sql = "SELECT nombre FROM oficinas WHERE id = :id LIMIT 1";
             $query = $this->prepare($sql);
