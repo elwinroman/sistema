@@ -46,6 +46,11 @@ export default class ListPage {
 
         fetch(url, { method: "POST", body: JSON.stringify(data)
         }).then(response => response.json()).then(data => {  
+            if(data.error) {
+                this.table.innerHTML = 'Datos no disponibles';
+                return;
+            }
+
             var myData = {
                 "headings" : Object.keys(data[0]),
                 "data"     : data.map(row => Object.values(row))
@@ -56,6 +61,8 @@ export default class ListPage {
             this.dt.setWidth(widths);   // establece el tamaño de las columnas
             this.dt.addClassToHead(classes);
             this.dt.hrefLinkColumns(CONFIG.url_base + 'oficina/details');
+
+            this.dt.visibilityHandler();   // visibilidad de columnas
 
         }).catch(error => console.log(error.message));
     }

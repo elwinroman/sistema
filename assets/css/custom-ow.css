@@ -142,6 +142,22 @@ input:focus-visible {
     border-radius: 50%;
 }
 
+/* Bootstrap */
+.form-check-input {
+    width: 14px;
+    height: 14px;
+}
+.form-check-input[type="checkbox"] {
+    border-radius: 2px;
+}
+.form-check-input:checked  {
+	background-color: #2196f3; 
+	border-color: #2196f3;
+}
+.form-check-input:focus  {
+	box-shadow: none;
+}
+
 /* Utils */
 .weigth-500-ow {
     font-weight: 500;

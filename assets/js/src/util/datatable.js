@@ -80,6 +80,7 @@ export default class DataTable {
         this.dataTable.on('datatable.init', redirect);
         this.dataTable.on('datatable.sort', redirect);
         this.dataTable.on('datatable.page', redirect);
+        this.dataTable.on('datatable.update', redirect);
     }
 
     // Formatea estilos de simple-dataTable añadiendo clases propias
@@ -87,8 +88,6 @@ export default class DataTable {
         let dataTableTop = this.wrapper.querySelector(".dataTable-top");
         let searchInput = dataTableTop.querySelector(".dataTable-search input.dataTable-input");
         let selectDropdown = dataTableTop.querySelector(".dataTable-dropdown select.dataTable-selector");
-
-        // dataTableTop.classList.add('d-flex', 'justify-content-around');
         
         searchInput.classList.add('input-ow');
 
@@ -97,5 +96,55 @@ export default class DataTable {
         selectDropdown.style.display = 'inline-block';
         selectDropdown.style.paddingLeft = '2px';
         selectDropdown.style.paddingRight = '0';
+    }
+
+    // Handler para la visibilidad de columnas EXCEPTO la columna de (+)details
+    visibilityHandler() {
+        let columnasVisibles = this.dataTable.columns().visible();
+        let headings = this.dataTable.headings;     // dataTable headings HTMLCollection
+
+        for(let i=0; i<columnasVisibles.length-1; i++) {
+            let nombre = headings[i].textContent;
+            let value = i;
+            this.newVisibilityColumnHandler(value, nombre, columnasVisibles[i]);
+        }
+
+        // evento checkbox que oculta o muestra columnas
+        let checkboxHandler = document.querySelectorAll('.column-visibility ul > li > input');
+        checkboxHandler.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                let column = parseInt(checkbox.value);
+                
+                if(checkbox.checked) this.dataTable.columns().show([column]);
+                else  this.dataTable.columns().hide([column]);
+            });
+        });
+    }
+
+    /**
+     * Crea un elemento HTML para la visibilidad de columnas => (<li><input type="checkbox"><label></li>)
+     * @param {String} value          Nro de columna del datatable 
+     * @param {String} nombre         Nombre de la columna
+     * @param {Bool}   columnavisible Columna visible o no
+     */
+    newVisibilityColumnHandler(value, nombre, columnavisible) {
+        let menu = document.querySelector('.column-visibility ul.column-visibility-menu');
+        let li = document.createElement('li');
+        let input = document.createElement('input');
+        let label = document.createElement('label');
+
+        // atributos input
+        input.setAttribute('type', 'checkbox');
+        input.setAttribute('class', 'form-check-input');
+        input.setAttribute('value', value);
+
+        if(columnavisible) input.checked = true;
+
+        label.innerHTML = nombre;
+
+        // añadiendo
+        li.appendChild(input);
+        li.appendChild(label);
+        menu.appendChild(li);
     }
 }

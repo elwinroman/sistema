@@ -246,10 +246,31 @@ body.short footer {
     font-size: 0.85rem;
 }
 #lista-oficina .wrapper-chief {
+    display: inline-block;
     border-radius: 6px;
     padding: 6px 10px;
     color: white;
     background: #5a61bd;
+}
+
+/* Estilos para la visibilidad de columnas */
+.column-visibility {
+    width: 100%;
+    text-align: right;
+}
+.column-visibility ul.column-visibility-menu {
+    padding: 10px 15px 5px 15px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    border: 1px solid black;    /*(-)*/
+}
+ul.column-visibility-menu > li {
+    color: var(--color-font-body);
+    padding: 2px 0;
+}
+ul.column-visibility-menu > li > label {
+    padding-left: 5px;
+    margin-top: 0.1em;
 }
 
 /* Reescribiendo estilos de simpleDataTables */
