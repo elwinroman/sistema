@@ -33,12 +33,13 @@ class OficinaModel extends ModelBase {
 
     public function update() {
         try {
-            $sql = "UPDATE oficinas SET nombre = :nombre, oficina_id = :oficina_id WHERE id = :id";
+            $sql = "UPDATE oficinas SET nombre = :nombre, oficina_id = :oficina_id, observacion = :observacion WHERE id = :id";
             $query = $this->prepare($sql);
             $query->execute([
                 'id'         => $this->id,
                 'nombre'     => $this->nombre,
-                'oficina_id' => $this->oficina_id
+                'oficina_id' => $this->oficina_id,
+                'observacion'=> $this->observacion
             ]);
 
             return $query;
@@ -63,6 +64,7 @@ class OficinaModel extends ModelBase {
                 $this->id = $row['id'];
                 $this->oficina_id = $row['oficina_id'];
                 $this->nombre = $row['nombre'];
+                $this->observacion = $row['observacion'];
                 return true;
             }
             return false;
@@ -127,11 +129,13 @@ class OficinaModel extends ModelBase {
         }
     }
     
-    public function setId($id) {                $this->id = $id; }
-    public function setNombre($nombre) {        $this->nombre = $nombre; }
-    public function setOficinaId($oficina_id) { $this->oficina_id = $oficina_id; }
-    public function getId() {                   return $this->id; }
-    public function getNombre() {               return $this->nombre; }
-    public function getOficinaId() {            return $this->oficina_id; }
+    public function setId($id) {                    $this->id = $id; }
+    public function setNombre($nombre) {            $this->nombre = $nombre; }
+    public function setOficinaId($oficina_id) {     $this->oficina_id = $oficina_id; }
+    public function setObservacion($observacion) {  $this->observacion = $observacion; }
+    public function getId() {                       return $this->id; }
+    public function getNombre() {                   return $this->nombre; }
+    public function getOficinaId() {                return $this->oficina_id; }
+    public function getObservacion() {              return $this->observacion; }
 }
 ?>

@@ -18,8 +18,8 @@ class OficinaController extends ControllerBase {
         $this->view->render('oficina/list');
     }
 
-    public function createorupdate() {
-        if(!$this->existsPOST(['nombre', 'tipo-oficina']) && isset($_GET['operation'])) {
+    public function create() {
+        if(!$this->existsPOST(['nombre', 'tipo-oficina'])) {
             $this->redirect('error');
             return;
         }
@@ -28,7 +28,8 @@ class OficinaController extends ControllerBase {
         $oficina_data = array(
             'nombre'       => $this->util->limpiar_cadena($_POST['nombre']),
             'tipo_oficina' => strtolower($_POST['tipo-oficina']),
-            'oficina_id'   => null
+            'oficina_id'   => null,
+            'observacion'  => null
         );
         
         if($oficina_data['tipo_oficina'] == 'suboficina') 
@@ -44,21 +45,51 @@ class OficinaController extends ControllerBase {
         $oficina = $this->loadModel('oficina');
         $oficina->setNombre($oficina_data['nombre']);
         $oficina->setOficinaId($oficina_data['oficina_id']);
-        
-        if($_GET['operation'] == 'new')         // crea oficina
-            $result = $oficina->insert();
-        else if($_GET['operation'] == 'edit') {  // edita oficina                                
-            $oficina->setId($_GET['id']);
-            $result = $oficina->update();
-        }
 
         // devolución de resultados
-        if($result) {
+        if($result = $oficina->insert()) {
             $id = $oficina->getId();
             $this->redirect('oficina/details&id='.$id);
             return;
         } else {
             $this->redirect('oficina/new');
+            return;
+        }
+    }
+
+    public function update() {
+        if(!$this->existsPOST(['nombre', 'tipo-oficina', 'observacion']) && !isset($_GET['id'])) {
+            $this->redirect('error');
+            return;
+        }
+        
+        // tratamiento de los datos (normalización)
+        $oficina_data = array(
+            'nombre'       => $this->util->limpiar_cadena($_POST['nombre']),
+            'tipo_oficina' => strtolower($_POST['tipo-oficina']),
+            'oficina_id'   => null,
+            'observacion'  => $this->util->reduce_multiple_space($_POST['observacion'])
+        );
+
+        if($oficina_data['tipo_oficina'] == 'suboficina') 
+            $oficina_data['oficina_id'] = $_POST['oficina-jefe'];
+
+        // validación de datos
+        if(!$this->validate($oficina_data)) {
+            $this->redirect('oficina/details&id='.$_GET['id']);
+            return;
+        }
+        
+        // proceso para insertar en la base de datos
+        $oficina = $this->loadModel('oficina');
+        $oficina->setId($_GET['id']);
+        $oficina->setNombre($oficina_data['nombre']);
+        $oficina->setOficinaId($oficina_data['oficina_id']);
+        $oficina->setObservacion($oficina_data['observacion']);
+        
+        if($result = $oficina->update()) {
+            $id = $oficina->getId();
+            $this->redirect('oficina/details&id='.$id);
             return;
         }
     }
@@ -76,19 +107,20 @@ class OficinaController extends ControllerBase {
             $this->view->data = [
                 'id'         => $oficina->getId(),
                 'nombre'     => $this->util->output_string($oficina->getNombre()),
-                'oficina_id' => $oficina->getOficinaId()
+                'oficina_id' => $oficina->getOficinaId(),
+                'observacion'=> $oficina->getObservacion()
             ];
             
             // obtiene oficina_jefe (si es suboficina)
             if($oficina->getOficinaId() != null) {
-                $this->view->tipoOficina = "OFICINA JEFE";
+                $this->view->tipoOficina = "ÓRGANO";
                 $oficinaJefe = $oficina->get_oficinajefe();
                 
                 $this->view->oficina = $this->util->output_string($oficinaJefe['nombre']);
 
             // obtiene suboficinas (si es oficina jefe)
             } else {
-                $this->view->tipoOficina = "SUBOFICINAS";
+                $this->view->tipoOficina = 'UNIDADES ORGÁNICAS';
                 $suboficinas = $oficina->get_suboficinas();
 
                 if(count($suboficinas) > 0) {
@@ -97,7 +129,16 @@ class OficinaController extends ControllerBase {
                     }
 
                 } else
-                    $this->view->oficina = "No hay suboficinas registradas todavía";
+                    $this->view->oficina = 'No hay unidades orgánicas registradas todavía';
+            }
+
+            // obtiene cargos
+            // $cargos = $oficina->getCargos();
+            $cargos = [];
+            if(count($cargos) > 0) {
+                $this->view->cargos = null;
+            } else {
+                $this->view->cargos = 'No hay cargos registrados todavia';
             }
 
             $this->view->render('oficina/details');
@@ -119,11 +160,14 @@ class OficinaController extends ControllerBase {
             return;
         }
 
-        $regx_name = array("options" => array("regexp" => "/^([A-Za-zÀ-ÿ]\s?)+$/"));
+        $regx_name = array("options" => array("regexp" => "/^([A-Za-zÀ-ÿ,.-]\s?){1,60}$/"));
+        $regx_nota = array("options" => array("regexp" => "/^([A-Za-zÀ-ÿ0-9,;(){}[\]*+¿?!¡:._-]\s?){1,200}$/"));
 
         if(!filter_var($data['nombre'], FILTER_VALIDATE_REGEXP, $regx_name))
             return false;
         if($data['tipo_oficina'] == 'suboficina' && !filter_var($data['oficina_id'], FILTER_VALIDATE_INT))
+            return false;
+        if(!is_null($data['nota']) && !filter_var($data['nota'], FILTER_VALIDATE_REGEXP, $regx_nota))
             return false;
         return true;
     }

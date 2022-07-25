@@ -54,9 +54,9 @@ class RequestController extends ControllerBase {
             
             foreach($res as $row) {
                 $data[] = array(
-                    '#'       => $row['nro'], 
+                    'Nro'     => $row['nro'], 
                     'Oficina' => $this->util->output_string($row['nombre']),
-                    'Chief'   => $this->util->output_string($row['oficina_jefe']),
+                    'Organo'  => $this->util->output_string($row['oficina_jefe']),
                     'Ver'     => $row['id']);
             }
             die(json_encode($data));

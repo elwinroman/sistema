@@ -2,8 +2,8 @@
 
 class Util {
     /**
-     * Elimina espacios en blanco entre words dejando one, elimina espacios en blanco
-     * de los extremos y convierte a minúsculas
+     * Elimina multiples espacios a un solo espacio, y elimina espacios de los extremos
+     * además convierte a minúsculas
      * @param  String $cadena
      * @return String $nueva_cadena
      */
@@ -11,6 +11,15 @@ class Util {
         $cadena = preg_replace('/\s+/', ' ', $cadena);
         $nueva_cadena = trim(mb_strtolower($cadena));
         return $nueva_cadena;
+    }
+
+    /**
+     * Elimina multiples espacios a un solo espacio, y elimina espacios de los extremos
+     * @param  String $cadena
+     * @return String
+     */
+    public function reduce_multiple_space($cadena) {
+        return trim(preg_replace('/[ \r\t]+/', ' ', $cadena));
     }
 
     /**
