@@ -3,41 +3,49 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Modal title</h5>
-                <button type="button" class="close" data-bs-dismiss="modal">x</button>
+                <h6 class="modal-title">Modal title</h6>
+                <button type="button" class="close btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="form-oficina" autocomplete="off" action="<?=URL_BASE?>oficina/createorupdate&operation=edit&id=<?=$this->data['id']?>" method="POST">
-                    <h6 class="">Datos de la oficina</h6>
+                <form id="form-oficina" autocomplete="off" action="<?=URL_BASE?>oficina/update&id=<?=$this->data['id']?>" method="POST">
                     <div class="form-field-ow">		<!-- Field NOMBRE -->
-                        <label for="nombre" class="weigth-500-ow">Nombre</label>
-                        <input class="input-ow" type="text" name="nombre" maxlength="100" value="<?= $this->data['nombre'] ?>" pattern="\s*([A-Za-zÀ-ÿ]+\s*)+" required autofocus>
+                        <label for="nombre" class="bold-ow">Nombre</label>
+                        <input class="input-ow input-height-ow" type="text" name="nombre" maxlength="60" value="<?= $this->data['nombre'] ?>" pattern="\s*([A-Za-zÀ-ÿ,.-]+\s*)+" required autofocus>
                     </div>
                     
                     <fieldset class="form-field-ow">
-                        <legend class="weigth-500-ow">Selecciona el tipo de oficina</legend>
-
-                        <?php if(is_null($this->data['oficina_id'])): ?>
-                            <input type="radio" name="tipo-oficina" id="oficinajefe" value="oficina-jefe" checked required>
-                        <?php else: ?>
-                            <input type="radio" name="tipo-oficina" id="oficinajefe" value="oficina-jefe" required>
-                        <?php endif; ?>
-                        <label for="tipo-oficina">Oficina jefe</label>
+                        <legend class="bold-ow">Selecciona el tipo de oficina</legend>
+                        <div>
+                            <?php if(is_null($this->data['oficina_id'])): ?>
+                                <input type="radio" name="tipo-oficina" id="oficinajefe" value="oficina-jefe" checked required>
+                            <?php else: ?>
+                                <input type="radio" name="tipo-oficina" id="oficinajefe" value="oficina-jefe" required>
+                            <?php endif; ?>
+                            <label for="tipo-oficina">Órgano</label>
+                        </div>
                         
-                        <?php if(is_null($this->data['oficina_id'])): ?>
-                            <input type="radio" name="tipo-oficina" id="suboficina" value="suboficina" required>
-                        <?php else: ?>
-                            <input type="radio" name="tipo-oficina" id="suboficina" value="suboficina" checked required>
-                        <?php endif; ?>
-                        <label for="tipo-oficina">Suboficina</label>
+                        <div>
+                            <?php if(is_null($this->data['oficina_id'])): ?>
+                                <input type="radio" name="tipo-oficina" id="suboficina" value="suboficina" required>
+                            <?php else: ?>
+                                <input type="radio" name="tipo-oficina" id="suboficina" value="suboficina" checked required>
+                            <?php endif; ?>
+                            <label for="tipo-oficina">Unidad orgánica</label>
+                        </div>
                     </fieldset>
 
                     <div class="form-field-ow">		<!-- Field OFICINA-JEFE -->
-                        <label for="oficina-jefe" class="weigth-500-ow">Oficina jefe</label><br>
-                        <select name="oficina-jefe" class="input-ow" data-selected="<?= $this->data['oficina_id'] ?>"></select>
+                        <label for="oficina-jefe" class="bold-ow">Órgano</label><br>
+                        <select name="oficina-jefe" class="input-ow input-height-ow" data-selected="<?= $this->data['oficina_id'] ?>"></select>
                     </div>
+
+                    <div class="form-field-ow">
+                            <label for="observacion" class="bold-ow">Observación</label><br>
+                            <textarea class="input-ow" name="observacion" rows="5" maxlength="200"><?= $this->data['observacion'] ?></textarea>
+                    </div>
+
                     <div>
-                        <button type="submit" class="btn-ow btn-ow-primary">Guardar</button>
+                        <button type="submit" class="btn-ow btn-ow-blue">Guardar</button>
                     </div>
                 </form>
             </div>
