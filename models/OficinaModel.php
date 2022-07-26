@@ -12,7 +12,7 @@ class OficinaModel extends ModelBase {
 
     public function insert() {
         try {
-            $sql = "INSERT INTO oficinas(id, oficina_id, nombre) VALUES(:id, :oficina_id, :nombre)";
+            $sql = "INSERT INTO oficina (id, oficina_id, nombre) VALUES(:id, :oficina_id, :nombre)";
             $query = $this->prepare($sql);
             $query->execute([
                 ':id'         => null,
@@ -33,7 +33,7 @@ class OficinaModel extends ModelBase {
 
     public function update() {
         try {
-            $sql = "UPDATE oficinas SET nombre = :nombre, oficina_id = :oficina_id, observacion = :observacion WHERE id = :id";
+            $sql = "UPDATE oficina SET nombre = :nombre, oficina_id = :oficina_id, observacion = :observacion WHERE id = :id";
             $query = $this->prepare($sql);
             $query->execute([
                 'id'         => $this->id,
@@ -56,7 +56,7 @@ class OficinaModel extends ModelBase {
      */
     public function get($id) {
         try {
-            $sql = "SELECT * FROM oficinas WHERE id = :id";
+            $sql = "SELECT * FROM oficina WHERE id = :id";
             $query = $this->prepare($sql);
             $query->execute([':id' => $id]);
 
@@ -77,7 +77,7 @@ class OficinaModel extends ModelBase {
     public function getAll() {
         try {
             $sql = "SELECT ROW_NUMBER() OVER(ORDER BY nombre) AS nro, sub.id, sub.nombre, chief.nombre AS oficina_jefe
-                    FROM oficinas AS sub LEFT JOIN oficinas AS chief ON sub.oficina_id = chief.id";
+                    FROM oficina AS sub LEFT JOIN oficina AS chief ON sub.oficina_id = chief.id";
             $query = $this->query($sql);
             
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -91,7 +91,7 @@ class OficinaModel extends ModelBase {
     // Devuelve una lista de oficinas jefe
     public function getoficinasjefe() {
         try {
-            $sql = "SELECT id, nombre FROM oficinas WHERE oficina_id IS NULL ORDER BY nombre";
+            $sql = "SELECT id, nombre FROM oficina WHERE oficina_id IS NULL ORDER BY nombre";
             $query = $this->query($sql);
          
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -104,7 +104,7 @@ class OficinaModel extends ModelBase {
 
     public function get_oficinajefe() {
         try {
-            $sql = "SELECT nombre FROM oficinas WHERE id = :id LIMIT 1";
+            $sql = "SELECT nombre FROM oficina WHERE id = :id LIMIT 1";
             $query = $this->prepare($sql);
             $query->execute([ 'id' => $this->oficina_id]);
             
@@ -118,7 +118,7 @@ class OficinaModel extends ModelBase {
 
     public function get_suboficinas() {
         try {
-            $sql = "SELECT nombre FROM oficinas WHERE oficina_id = :id";
+            $sql = "SELECT nombre FROM oficina WHERE oficina_id = :id";
             $query = $this->prepare($sql);
             $query->execute([':id' => $this->id]);
 
