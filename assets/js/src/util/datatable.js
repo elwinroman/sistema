@@ -85,13 +85,16 @@ export default class DataTable {
 
     // Formatea estilos de simple-dataTable añadiendo clases propias
     formatOwnStyles() {
+        let dataTableContainer = document.querySelector('.dataTable-container');
         let dataTableTop = this.wrapper.querySelector(".dataTable-top");
         let searchInput = dataTableTop.querySelector(".dataTable-search input.dataTable-input");
         let selectDropdown = dataTableTop.querySelector(".dataTable-dropdown select.dataTable-selector");
         
-        searchInput.classList.add('input-ow');
+        dataTableContainer.style.overflowX = 'auto';
+        dataTableTop.style.padding = '8px 0';
+        searchInput.classList.add('input-ow','input-height-ow');
 
-        selectDropdown.classList.add('input-ow');
+        selectDropdown.classList.add('input-ow','input-height-ow');
         selectDropdown.style.width = '45px';
         selectDropdown.style.display = 'inline-block';
         selectDropdown.style.paddingLeft = '2px';
@@ -110,7 +113,7 @@ export default class DataTable {
         }
 
         // evento checkbox que oculta o muestra columnas
-        let checkboxHandler = document.querySelectorAll('.column-visibility ul > li > input');
+        let checkboxHandler = document.querySelectorAll('.table-options-ow ul.visibility-menu > li > input');
         checkboxHandler.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
                 let column = parseInt(checkbox.value);
@@ -128,7 +131,7 @@ export default class DataTable {
      * @param {Bool}   columnavisible Columna visible o no
      */
     newVisibilityColumnHandler(value, nombre, columnavisible) {
-        let menu = document.querySelector('.column-visibility ul.column-visibility-menu');
+        let menu = document.querySelector('.table-options-ow ul.visibility-menu');
         let li = document.createElement('li');
         let input = document.createElement('input');
         let label = document.createElement('label');
@@ -146,5 +149,107 @@ export default class DataTable {
         li.appendChild(input);
         li.appendChild(label);
         menu.appendChild(li);
+    }
+
+    generateExcel() {
+        // genera worksheet
+        let exportableData = this.prepareDataToExport();
+        let worksheet = XLSX.utils.json_to_sheet(exportableData.data, {origin: 'A2', skipHeader: true});
+        
+        // obtiene el tamaño maximo de cada columna
+        const fitToColumn = data => {    
+            let columnWidths = [];
+
+            for(let property in data[0]) {      
+                columnWidths.push({ wch: Math.max(property ? property.toString().length : 0, 
+                        ...data.map(obj => obj[property] ? obj[property].toString().length : 0))});   
+            }
+
+            return columnWidths;
+        };
+
+        worksheet['!cols'] = fitToColumn(exportableData.data);
+        
+        // agrega los headers
+        let headers = exportableData.columnas.map(col => col.header);
+        XLSX.utils.sheet_add_aoa(worksheet, [headers]);
+
+        // genera workbook
+        let worbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(worbook, worksheet, 'lista');
+        
+        XLSX.writeFile(worbook, 'reporte.xlsx');
+    }
+
+    /** 
+     * Genera un objeto URL en el browser de tipo PDF
+     * @param {Object} config Objeto de configuración
+    */
+    generatePDF(config) {
+        let exportableData = this.prepareDataToExport();
+
+        // genera reporte
+        let doc = new jspdf.jsPDF();
+        
+        doc.autoTable({
+            columns: exportableData.columnas,
+            body   : exportableData.data,
+            theme  : 'striped',
+            columnStyles: config.columnStyles,
+            styles: {
+                cellPadding: 2
+            },
+            margin: config.margin
+        });
+
+        window.open(doc.output('bloburl'));
+    }
+
+    /**
+     * Prepara y organiza los datos para la exportación a pdf, excel o print
+     * @return {Object} columnas[], data[] 
+     */
+     prepareDataToExport() {
+        // head
+        let columnas = [];
+        for(let [index, head] of this.dataTable.headings.entries()) {
+            
+            // evita agregar la columna de link
+            if(index == this.dataTable.headings.length-1) break;
+            
+            // selecciona solo las columnas visibles
+            let visibleColumns = this.dataTable.columns().visible();
+            if(visibleColumns[index] == true) {
+                columnas.push({
+                    header: head.textContent, 
+                    dataKey: head.textContent.toLowerCase()
+                });
+            }
+        }
+        
+        // body
+        let data = [];
+        for(let [index, tableRow] of this.dataTable.activeRows.entries()) {
+            let row = {};
+            let cont = 0;
+            
+            for(let cell of tableRow.cells) {
+                row[columnas[cont].dataKey] = cell.textContent;
+                cont++;
+
+                // evita agregar la columna de link
+                if(cont == tableRow.cells.length-1) break;
+            }
+
+            // cuando se realiza una búsqueda selecciona los datos coincidentes
+            if(this.dataTable.searching) {
+                let match_result = this.dataTable.searchData;  // array de indices de los resultados de búsqueda
+                
+                if(match_result.includes(index)) data.push(row);
+
+            } else data.push(row);
+        }
+
+        return {columnas, data};
     }
 }

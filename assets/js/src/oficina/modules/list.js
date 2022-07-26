@@ -63,7 +63,30 @@ export default class ListPage {
             this.dt.hrefLinkColumns(CONFIG.url_base + 'oficina/details');
 
             this.dt.visibilityHandler();   // visibilidad de columnas
+            
+            this.exportToPDF();    // exporta PDF
+            this.exportToExcel();  // exporta a Excel
 
         }).catch(error => console.log(error.message));
+    }
+
+    exportToPDF() {
+        // estilos de la columna (jspdf-autotable)
+        const config = {
+            columnStyles: {         // tamaño de la página - 210 unidades contando margenes
+                nro     : { halign: 'center', cellWidth: 10 },
+                oficina : { cellWidth: 90 },
+                organo  : { cellWidth: 80 }    
+            },
+            margin: { left: 15, right: 15 }
+        };
+        
+        let pdfButton = document.querySelector('.pdf-button');
+        pdfButton.addEventListener('click', () => this.dt.generatePDF(config));
+    }
+
+    exportToExcel() {
+        let excelButton = document.querySelector('.excel-button');
+        excelButton.addEventListener('click', () => this.dt.generateExcel());
     }
 }

@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="<?=URL_BASE?>assets/css/custom-ow.css">
     <link rel="stylesheet" href="<?=URL_BASE?>assets/css/styles.css">
     
+    <script src="<?=URL_BASE?>libs/jspdf-autotable-3.5.25/jspdf.umd.js"></script>
+    <script src="<?=URL_BASE?>libs/jspdf-autotable-3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="<?=URL_BASE?>libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
+    <script src="<?=URL_BASE?>libs/sheetjs-0.18.9/xlsx.full.min.js"></script>
     <script type="module" src="<?=URL_BASE?>assets/js/main.js" defer></script>
     <title>Sistema</title>
 </head>

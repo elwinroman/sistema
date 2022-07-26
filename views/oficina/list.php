@@ -5,15 +5,11 @@
         <div class="box-ow-body">
             <div class="table-options-ow">
                 <div class="exportable">
-                    <button class="btn-ow">
+                    <button class="btn-ow pdf-button">
 				        <i class="zmdi zmdi-file"></i>
 				        <span>PDF</span>
 			        </button>
-                    <button class="btn-ow print-button">
-				        <i class="zmdi zmdi-print"></i>
-				        <span>Print</span>
-			        </button>
-                    <button class="btn-ow">
+                    <button class="btn-ow excel-button">
 				        <i class="zmdi zmdi-file-text"></i>
 				        <span>Excel</span>
 			        </button>
