@@ -55,7 +55,6 @@ export default class Select {
                 // placeholder select si es para crear oficina o editar oficina jefe
                 if(!this.select_oficina.dataset.selected) this.addPlaceholder();
                 this.addOptionToSelect(data);
-                
             }
 
         }).catch(error => console.log(error.message));
@@ -68,11 +67,13 @@ export default class Select {
     addOptionToSelect(data) {
         for(let i=0; i<data.length; i++) {
             
-            let id_oficina = document.querySelector('#oficina-name-id').dataset.id;
             
             // si está en la edicion de oficina y es una oficina jefe no debe seleccionarse a sí mismo
-            if(this.loadedEdit && id_oficina == data[i].id)
-                continue;
+            if(this.loadedEdit) {
+                let id_oficina = document.querySelector('#oficina-name-id').dataset.id;
+                
+                if(id_oficina == data[i].id) continue;
+            }
 
             let option = document.createElement('option');
             option.text = data[i].nombre;
