@@ -38,7 +38,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- Gestión de cargos -->
+        <div class="menu-panel">
+                <div class="menu-link" data-id="3">
+                    <i class="menu-icon zmdi zmdi-account"></i>
+                    <span class="menu-label">Cargos</span>
+                    <i class="menu-arrow zmdi zmdi-chevron-right"></i>
+                </div>
+
+                <div class="submenu-panel">
+                    <div class="submenu-link">
+                        <i class="submenu-icon zmdi zmdi-circle"></i>
+                        <a class="submenu-label" href="<?=URL_BASE?>cargo/new">Crear cargo</a>
+                    </div>
+                    <div class="submenu-link">
+                        <i class="submenu-icon zmdi zmdi-circle"></i>
+                        <a class="submenu-label" href="<?=URL_BASE?>cargo/list">Lista cargo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="bottom-sidebar">
         <!-- Bottom sidebar -->
     </div>

@@ -24,8 +24,8 @@ CREATE TABLE oficina (
 CREATE TABLE cargo (
   id INT NOT NULL AUTO_INCREMENT,
   situacion CHAR(1) NOT NULL,
-  presupuesto BOOLEAN NOT NULL,
-  observacion VARCHAR(200) NOT NULL,
+  presupuesto BOOLEAN NOT NULL DEFAULT 1,
+  observacion VARCHAR(200) DEFAULT '',
   PRIMARY KEY(id)
 )
 
@@ -35,7 +35,7 @@ CREATE TABLE historial_cargo (
   nombre VARCHAR(60) NOT NULL,
   nro_plaza CHAR(3) NOT NULL,
   clasificacion VARCHAR(8) NOT NULL,
-  codigo VARCHAR(10) DEFAULT NULL,
+  codigo VARCHAR(10) DEFAULT '',
   ordenanza VARCHAR(50) NOT NULL,
   fecha_ordenanza DATE NOT NULL,
   oficina_id INT NOT NULL,

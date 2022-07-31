@@ -66,8 +66,7 @@ export default class Select {
      */ 
     addOptionToSelect(data) {
         for(let i=0; i<data.length; i++) {
-            
-            
+                       
             // si está en la edicion de oficina y es una oficina jefe no debe seleccionarse a sí mismo
             if(this.loadedEdit) {
                 let id_oficina = document.querySelector('#oficina-name-id').dataset.id;

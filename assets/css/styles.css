@@ -269,6 +269,14 @@ body.short footer {
     font-size: 0.85rem !important;
 }
 
+/* Estlos para crear cargos */
+#crear-cargo {
+    font-size: 0.85rem;
+}
+#crear-cargo .datos-cargo {
+    /* padding-right: 10px; */
+}
+
 /* Estilos para las opciones del datatable (exportable, visibility) */
 .table-options-ow {
     width: 100%;

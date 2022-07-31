@@ -88,7 +88,7 @@ class OficinaModel extends ModelBase {
         }
     }
 
-    // Devuelve una lista de oficinas jefe
+    // Devuelve una lista de oficinas jefe (fetch request)
     public function getoficinasjefe() {
         try {
             $sql = "SELECT id, nombre FROM oficina WHERE oficina_id IS NULL ORDER BY nombre";
@@ -96,6 +96,23 @@ class OficinaModel extends ModelBase {
          
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
+
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
+
+    /** 
+     * Devuelve una lista de suboficinas de una oficina-jefe (fetch request)
+     * @param String $id Identificador de oficina-jefe
+     */
+    public function getsuboficinas($id) {
+        try {
+            $sql = "SELECT id, nombre FROM oficina WHERE oficina_id = :id";
+            $query = $this->prepare($sql);
+            $query->execute([':id' => $id]);
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
 
         } catch(PDOException $e) {
             echo $e;
@@ -116,6 +133,7 @@ class OficinaModel extends ModelBase {
         }
     }
 
+    // Obtiene lista de nombres de suboficinas 
     public function get_suboficinas() {
         try {
             $sql = "SELECT nombre FROM oficina WHERE oficina_id = :id";

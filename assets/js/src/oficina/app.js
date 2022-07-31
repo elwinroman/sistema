@@ -1,7 +1,7 @@
 import SelectHandler from "./modules/select.js";
 import ListPage from "./modules/list.js";
 
-// Carga los diferentes módulos del objeto layout
+// Carga funcionalidades del módulo oficina
 export default class App {
     constructor() {
         this.selecthandler = new SelectHandler();
@@ -15,7 +15,7 @@ export default class App {
         // habilita o desahabilita el select segpun el input-radio
         this.selecthandler.enableDisableSelect();
 
-        // despliega el dataTable con la lista de oficinas
+        // despliega el dataTable con la lista de oficinas, busqueda y opciones de exportación
         this.listPage.datatableOficina();
     }
 }

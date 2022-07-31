@@ -63,5 +63,32 @@ class RequestController extends ControllerBase {
 
         } else die(json_encode(array('error' => true, 'mensaje' => 'No data')));
     }
+
+    // Controla el envío de una lista de suboficinas a partir del id de una oficina-jefe
+    public function getsuboficinas() {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        
+        if(!isset($_POST['request']) && !isset($_POST['id'])) {
+            $this->redirect('error');
+            return;
+        }
+
+        $id = $_POST['id'];
+        $oficina = $this->loadModel('oficina');
+        $result = $oficina->getsuboficinas($id);
+
+        if(count($result) > 0) {
+            $data = [];
+
+            foreach($result as $row) {
+                $data[] = array(
+                    'id'     => $row['id'],
+                    'nombre' => $this->util->output_string($row['nombre'])
+                );
+            }
+            die(json_encode($data));
+
+        } else die(json_encode(array('error' => true, 'mensaje' => 'no data')));
+    }
 }
 ?>
