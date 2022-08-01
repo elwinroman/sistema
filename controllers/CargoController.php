@@ -29,13 +29,13 @@ class CargoController extends ControllerBase {
             'situacion'     => $_POST['situacion'],
             'ordenanza'     => $this->util->limpiar_cadena($_POST['ordenanza']),
             'fecha_ordenanza' => $_POST['fecha-ordenanza'],
-            'oficina_jefe'  => $_POST['oficina-jefe'],  // id
-            'suboficina'    => null     // id
+            'oficina_id'    => null
         );
 
         if(isset($_POST['checkbox']) && isset($_POST['suboficina'])) {
-            $cargo_data['suboficina'] = $_POST['suboficina'];
-        }
+            $cargo_data['oficina_id'] = $_POST['suboficina'];
+        } else
+            $cargo_data['oficina_id'] = $_POST['oficina-jefe'];
 
         // validación de datos
         if(!$this->validate($cargo_data)) {
@@ -51,9 +51,9 @@ class CargoController extends ControllerBase {
         $cargo->setClasificacion($cargo_data['clasificacion']);
         $cargo->setCodigo($cargo_data['codigo']);
         $cargo->setSituacion($cargo_data['situacion']);
-        $cargo->setOrdenanza($cargo_data['situacion']);
+        $cargo->setOrdenanza($cargo_data['ordenanza']);
         $cargo->setFechaOrdenanza($cargo_data['fecha_ordenanza']);
-        $cargo->setOficinaId($cargo_data['oficina_jefe']);
+        $cargo->setOficinaId($cargo_data['oficina_id']);
 
         // insertar en la base de datos
         if($cargo->insert()) {
@@ -85,6 +85,23 @@ class CargoController extends ControllerBase {
             $this->redirect('error');
             return;
         }
+
+        if(!filter_var($data['nombre'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^([A-Za-zÀ-ÿ,.-]\s?){1,60}$/']]))
+            return false;
+        if(!filter_var($data['nro_plaza'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[0-9]{3}$/']]))
+            return false;
+        if(!filter_var($data['clasificacion'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[A-Za-z-]{1,8}$/']]))
+            return false;
+        if(strlen($data['codigo']) > 0 && !filter_var($data['codigo'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^[0-9]{1,10}$/']]))
+            return false;
+        if(!filter_var($data['situacion'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^(o|O|p|P)$/']]))
+            return false;
+        if(!filter_var($data['ordenanza'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => '/^([A-Za-zÀ-ÿ0-9,;(){}[\]*+¿?!¡:._-]\s?){1,50}$/']]))
+            return false;
+        if(!$this->util->validateDate($data['fecha_ordenanza']))
+            return false;
+        if(!filter_var($data['oficina_id'], FILTER_VALIDATE_INT))
+            return false;
 
         return true;
     }

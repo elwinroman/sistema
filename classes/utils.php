@@ -47,5 +47,25 @@ class Util {
 		    $nueva_cadena .= (mb_strlen($word) < 3) ? mb_strtolower($word).' ' : $word.' '; 
 	    return trim($nueva_cadena);
     }
+
+    /**
+     * Cambia formato de fecha predeterminada a 'dia-mes-año'
+     * @param String $date
+     */
+    public function localFormatDate($date) {
+        $newDate = new DateTime($date);
+        return $newDate->format('d-m-Y');
+    }
+
+    /**
+     * Datetime validador para el formato predeterminado 'year-month-day'
+     * @param  String $date
+     * @param  String $format
+     * @return Bool
+     */
+    public function validateDate($date, $format = 'Y-m-d') {
+        $newDate = DateTime::createFromFormat($format, $date);
+        return $newDate && $newDate->format($format) == $date;
+    }
 }
 ?>

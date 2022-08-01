@@ -12,4 +12,7 @@ define('DB_PASSWORD', '');
 define('DB_DB', 'worker_master');
 define('DB_CHARSET', 'utf8');
 
+// Zona horaria DATE_TIME
+date_default_timezone_set('America/Lima');
+
 ?>
