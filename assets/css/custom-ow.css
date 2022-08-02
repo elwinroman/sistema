@@ -123,8 +123,9 @@ input:focus-visible {
     border-bottom: 1px solid #e0e0e0;
     vertical-align: middle;
 }
-.datatable-ow tr .num-column,
-.datatable-ow tr .link-column {
+.datatable-ow tr .num-column,       /* columna comunes */
+.datatable-ow tr .link-column,      /* columna comun */
+.datatable-ow tr .codigo-column {   /* columna de cargo */
     text-align: center;
 }
 .datatable-ow > thead > tr > th {

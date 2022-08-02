@@ -277,6 +277,12 @@ body.short footer {
     /* padding-right: 10px; */
 }
 
+/* Estilos para la lista de cargos */
+#lista-cargo {
+    overflow-x: auto;
+    font-size: 0.85rem;
+}
+
 /* Estilos para las opciones del datatable (exportable, visibility) */
 .table-options-ow {
     width: 100%;

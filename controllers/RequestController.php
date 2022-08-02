@@ -90,5 +90,36 @@ class RequestController extends ControllerBase {
 
         } else die(json_encode(array('error' => true, 'mensaje' => 'no data')));
     }
+
+    // Controla el envío de una lista de cargos
+    public function getcargos() {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+
+        if(!isset($_POST['request'])) {
+            $this->redirect('error');
+            return;
+        }
+
+        $cargo = $this->loadModel('cargo');
+        $result = $cargo->getAll();
+
+        if(count($result) > 0) {
+            $data = [];
+
+            foreach($result as $row) {
+                $data[] = array(
+                    'Nro'     => $row['nro_plaza'],
+                    'Nombre'  => $this->util->output_string($row['nombre']),
+                    'Clasif.' => mb_strtoupper($row['clasificacion']),
+                    'Código'  => $row['codigo'],
+                    'Oficina' => $this->util->output_string($row['oficina']),
+                    'Ver'     => $row['id']
+                );
+            }
+            die(json_encode($data));
+        } else die(json_encode(array('error' => true, 'mensaje' => 'no data')));
+
+        die(json_encode('tudu bene'));
+    } 
 }
 ?>

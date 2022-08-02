@@ -68,6 +68,21 @@ class CargoModel extends ModelBase {
         }
     }
 
+    public function getAll() {
+        try {
+            $sql = "SELECT cmain.id, c.nro_plaza, c.nombre, c.clasificacion, c.codigo, o.nombre AS oficina FROM cargo AS cmain
+                    LEFT JOIN historial_cargo AS c ON cmain.id = c.cargo_id 
+                    AND c.fecha_ordenanza = (SELECT MAX(fecha_ordenanza) FROM historial_cargo WHERE cargo_id = cmain.id)
+                    LEFT JOIN oficina AS o ON c.oficina_id = o.id";
+            $query = $this->query($sql);
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
+
     public function setSituacion($situacion) {            $this->situacion = $situacion; }
 
     public function setNombre($nombre) {                  $this->nombre = $nombre; }

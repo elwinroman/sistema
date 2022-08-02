@@ -14,6 +14,10 @@ class CargoController extends ControllerBase {
         $this->view->render('cargo/new');
     }
 
+    public function list() {
+        $this->view->render('cargo/list');
+    }
+
     public function create() {        
         if(!$this->existsPOST(['nombre','nro-plaza','clasificacion','codigo','situacion','ordenanza',
                             'fecha-ordenanza','oficina-jefe'])) {
