@@ -17,8 +17,8 @@ export default {
     getOffset: function(element) {
         const rect = element.getBoundingClientRect();
         return {
-            left: rect.left + window.scrollX,
-            top: rect.top + window.scrollY
+            left: rect.left,
+            top: rect.top
         };
     }
 }
