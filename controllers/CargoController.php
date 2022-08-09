@@ -75,6 +75,64 @@ class CargoController extends ControllerBase {
             $this->redirect('error');
             return;
         }
+        
+        $id = $_GET['id'];
+
+        $cargo = $this->loadModel('cargo');
+        
+        if($cargo->get($id)) {
+
+            // agrega más detalles al resultado (situación del cargo)
+            if(strtolower($cargo->getSituacion()) == 'o') $situacion = 'O (Ocupado)';
+            else if(strtolower($cargo->getSituacion()) == 'p') $situacion = 'P (Preventivo)';
+
+            // agrega más detalles al resultado (clasificación del cargo)
+            $clasificacion = strtolower($cargo->getClasificacion());
+            switch($clasificacion) {
+                case 'fp'   : $clasificacion = 'FP (Funcionario Público)'; break;
+                case 'ec'   : $clasificacion = 'EC (Empleado de Confianza)'; break;
+                case 'sp-ds': $clasificacion = 'SP-DS (Servidor Público Directivo Superior)'; break;
+                case 'sp-ej': $clasificacion = 'SP-EJ (Servidor Público Ejecutivo)'; break;
+                case 'sp-es': $clasificacion = 'SP-ES (Servidor Público Especialista)'; break;
+                case 'sp-ap': $clasificacion = 'SP-AP (Servidor Público de Apoyo)'; break; 
+            }
+
+            $this->view->data = [
+                'nombre'        => $this->util->output_string($cargo->getNombre()),
+                'nro_plaza'     => $cargo->getNroPlaza(),
+                'clasificacion' => $clasificacion,
+                'codigo'        => $cargo->getCodigo(),
+                'situacion'     => $situacion,
+                'oficina'       => $this->util->output_string($cargo->getOficina()),
+                'observacion'   => $cargo->getObservacion(),
+                'oficina_id'    => $cargo->getOficinaId()
+            ];
+
+            // historial de cambios
+            foreach($cargo->getHistorialCambios($id) as $row) {
+                
+                // si el cargo no pertenece a una oficina jefe, se define el campo como vacio
+                if(is_null($row['oficina_jefe'])) $oficina_jefe = '';   
+                else $oficina_jefe = $row['oficina_jefe'];
+
+                $this->view->data_historial_cambio[] = [
+                    'id'            => $row['id'],
+                    'nombre'        => $this->util->output_string($row['nombre']),
+                    'nro_plaza'     => $row['nro_plaza'],
+                    'codigo'        => $row['codigo'],
+                    'clasificacion' => mb_strtoupper($row['clasificacion']),
+                    'oficina'       => $this->util->output_string($row['oficina']),
+                    'ordenanza'     => mb_strtoupper($row['ordenanza']),
+                    'fecha_ordenanza' => $this->util->localFormatDate($row['fecha_ordenanza']),
+                    'oficina_id'    => $row['oficina_id'],
+                    'oficina_jefe'  => $oficina_jefe
+                ];
+
+            }
+
+        } else {
+            $this->redirect('error');
+        }
 
         $this->view->render('cargo/details');
     }
