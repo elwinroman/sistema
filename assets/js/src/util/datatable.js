@@ -90,7 +90,6 @@ export default class DataTable {
         let searchInput = dataTableTop.querySelector(".dataTable-search input.dataTable-input");
         let selectDropdown = dataTableTop.querySelector(".dataTable-dropdown select.dataTable-selector");
         
-        dataTableContainer.style.overflowX = 'auto';
         dataTableTop.style.padding = '8px 0';
         searchInput.classList.add('input-ow','input-height-ow');
 

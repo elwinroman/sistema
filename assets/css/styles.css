@@ -254,7 +254,6 @@ body.short footer {
 
 /* Estilos para la lista de oficinas */
 #lista-oficina {
-    overflow-x: auto;
     font-size: 0.85rem;
 }
 #lista-oficina .wrapper-chief {
@@ -269,27 +268,92 @@ body.short footer {
     font-size: 0.85rem !important;
 }
 
-/* Estlos para crear cargos */
+/* Estilos para crear cargos */
 #crear-cargo {
     font-size: 0.85rem;
-}
-#crear-cargo .datos-cargo {
-    /* padding-right: 10px; */
 }
 
 /* Estilos para la lista de cargos */
 #lista-cargo {
-    overflow-x: auto;
     font-size: 0.85rem;
+}
+
+/* Estilos para mostrar un cargo */
+#mostrar-cargo {
+    font-size: 0.85rem;
+}
+#mostrar-cargo .details > div.row,
+#mostrar-cargo .details > .main-cargo-data > div.row {
+    margin-bottom: 20px;
+}
+#mostrar-cargo .main-cargo-data {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid #b3b3b3;
+    border-bottom: 1px solid #b3b3b3;
+}
+#mostrar-cargo .historial-cambios {
+    padding-top: 20px;
+}
+.historial-cambios > .btn-collapse {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    outline: none;
+    color: white;
+    background:#48b368;
+}
+.historial-cambios > .btn-collapse > span { font-weight: 500; }
+.historial-cambios > .btn-collapse > i { font-size: 21px; }
+div.container-historial-cambio { 
+    display: none; 
+    padding: 15px;
+    border: 1px solid var(--color-platinum);
+}
+div.container-historial-cambio.active { display: block; }
+div.container-historial-cambio button.add {
+    /* code */
+}
+div.container-historial-cambio .form-add {
+    display: none;
+    margin-top: 15px;
+    padding: 3px 15px;
+    border-left: 3px solid #acacac;
+}
+div.container-historial-cambio .form-add.active { display: block; }
+#datatable-historial-cambio td.actions > div {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+#datatable-historial-cambio td.actions button {
+    line-height: 25px;
+    box-shadow: none;
+}
+#datatable-historial-cambio td.actions .editBtn { padding: 1px 8px 0 8px; }
+#datatable-historial-cambio td.actions .deleteBtn { padding: 1px 10px 0 10px; }
+
+/* Estilos para los modals de editar */
+.modal .modal-header,
+.modal .modal-body {
+    padding: 15px 30px;
 }
 
 /* Estilos para las opciones del datatable (exportable, visibility) */
 .table-options-ow {
     width: 100%;
-    text-align: right;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding: 15px 0;
+}
+.table-options-ow .exportable {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 .table-options-ow ul.visibility-menu {
     padding: 10px 15px 5px 15px;
@@ -307,6 +371,10 @@ ul.visibility-menu > li > label {
 }
 
 /* Reescribiendo estilos de simpleDataTables */
+.dataTable-container {
+    overflow-x: auto;
+}
+.dataTable-bottom { padding: 0; }
 .dataTable-sorter::after,
 .dataTable-sorter::before {
 	border: none;	/* delete chevron arrow */
