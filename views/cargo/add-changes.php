@@ -1,4 +1,4 @@
-<form id="form-cargo" class="form-add" autocomplete="on" action="<?=URL_BASE?>cargo/addchanges&id=<?=$_GET['id']?>" method="POST">
+<form id="form-cargo" class="form-add" autocomplete="on" action="<?=URL_BASE?>cargo/addorupdatechanges&op=add&id-main=<?=$_GET['id']?>" method="POST">
     <div class="row g-0 gap-ow-15">
         <div class="datos-cargo col-md-6">
             

@@ -137,12 +137,18 @@ class CargoController extends ControllerBase {
         $this->view->render('cargo/details');
     }
 
-    // Añade cambios en el historial
-    public function addchanges() {
-        if(!$this->existsPOST(['nombre','nro-plaza','clasificacion','codigo','ordenanza',
-                            'fecha-ordenanza','oficina-jefe']) && isset($_GET['id'])) {
-            $this->redirect('error');
+    // Añade o edita cambios en el historial
+    public function addorupdatechanges() {
+        if(!$this->existsPOST(['nombre','nro-plaza','clasificacion','codigo','ordenanza','fecha-ordenanza','oficina-jefe'])) $this->redirect('error');
+        if(!isset($_GET['id-main'])) $this->redirect('error'); 
+        if(!isset($_GET['op'])) $this->redirect('error');
+
+        if($_GET['op'] === 'update') {
+            if(!isset($_GET['id'])) $this->redirect('error');
+            if(!filter_var($_GET['id'], FILTER_VALIDATE_INT)) $this->redirect('error');
         }
+        
+        $id_main = trim($_GET['id-main']);
 
         // tratamiento de los datos
         $cargo_data = array(
@@ -152,7 +158,7 @@ class CargoController extends ControllerBase {
             'codigo'        => $this->util->reduce_multiple_space($_POST['codigo']),
             'ordenanza'     => $this->util->limpiar_cadena($_POST['ordenanza']),
             'fecha_ordenanza' => $_POST['fecha-ordenanza'],
-            'cargo_id'      => $_GET['id'],
+            'cargo_id'      => $id_main,
             'oficina_id'    => null
         );
 
@@ -163,7 +169,7 @@ class CargoController extends ControllerBase {
 
         // validación de datos
         if(!$this->validate($cargo_data)) {
-            $this->redirect('cargo/details&id='.$_GET['id']);
+            $this->redirect('cargo/details&id='.$id_main);
             return;
         }
 
@@ -179,15 +185,42 @@ class CargoController extends ControllerBase {
         $cargo->setOficinaId($cargo_data['oficina_id']);
         $cargo->setCargoId($cargo_data['cargo_id']);
 
-        // insertar en la base de datos
-        if($cargo->insertChanges()) {
-            $this->redirect('cargo/details&id='.$_GET['id']);
-            return;
-        } else  {
-            $this->redirect('cargo/details&id='.$_GET['id']);
-            return;
+        if($_GET['op'] === 'add') {
+            // inserta un nuevo cambio en el historial de cargo
+            if($cargo->insertChanges()) {
+                $this->redirect('cargo/details&id='.$id_main);
+                return;
+            } else $this->redirect('error');
+        }  
+        else if($_GET['op'] === 'update') {
+            // modifica un cambio del historial de cargo
+            $cargo->setId(trim($_GET['id']));
+
+            if($cargo->updateChanges()) {
+                $this->redirect('cargo/details&id='.$id_main);
+                return;
+            } else $this->redirect('error');
         }
+
     }
+
+    public function deleteChanges() {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        
+        if(!isset($_POST['request'])) $this->redirect('error');
+        if(!isset($_POST['id'])) $this->redirect('error');
+
+        $id = $_POST['id'];
+        
+        // validación
+        if(!filter_var($id, FILTER_VALIDATE_INT)) $this->redirect('error');
+        
+        $cargo = $this->loadModel('cargo');
+        
+        if($cargo->deleteChanges($id)) die(json_encode(array('se ha eliminado correctamente')));
+        else die(json_encode(array('error' => true, 'mensaje' => 'no se pudo eliminar')));
+    }
+
     /**
      * Valida los datos al crear, añadir cambios o editar un cargo
      * @param  Array $data   Default: random var, lo importante es que reciba un array

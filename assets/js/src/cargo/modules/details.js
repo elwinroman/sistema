@@ -71,3 +71,149 @@ export default class DetailsPage {
             target.classList.toggle('active');
         });
     }
+
+    // Controla el button editar del historial de cambios del cargo
+    editChangesButton() {
+        if(!this.loaded) return;
+
+        let btnEditList = document.querySelectorAll('#datatable-historial-cambio td.actions button.editBtn');
+        
+        // eventos del button editar de la lista de historial
+        for (const btnEdit of btnEditList) {
+            btnEdit.addEventListener('click', () => {
+                let row = btnEdit.closest('tr');
+                
+                // obtiene datos de la fila
+                let cargo = {
+                    'id'             : row.dataset.id,
+                    'nombre'         : row.cells.namedItem('nombre').innerHTML,
+                    'nro_plaza'      : row.cells.namedItem('nro_plaza').innerHTML,
+                    'codigo'         : row.cells.namedItem('codigo').innerHTML,
+                    'clasificacion'  : row.cells.namedItem('clasificacion').innerHTML,
+                    'ordenanza'      : row.cells.namedItem('ordenanza').innerHTML,
+                    'fecha_ordenanza': row.cells.namedItem('fecha_ordenanza').innerHTML,
+                    'oficina_id'     : row.cells.namedItem('oficina_id').dataset.oficinaId,
+                    'oficina_jefe'   : row.dataset.oficinaJefe      // opcional
+                }
+
+                // establece los datos obtenidos en el formulario de edición
+                // establece el action_url del formulario
+                let form_cargo = document.querySelector('#mostrar-cargo #editar-cargo-modal #form-cargo');
+                let url_action = form_cargo.action;     // url del controlador de edición de cambios
+                form_cargo.action = url_action + cargo.id;
+
+                // establece los inputs
+                form_cargo.querySelector('input[name="nombre"]').value = cargo.nombre;
+                form_cargo.querySelector('input[name="nro-plaza"]').value = cargo.nro_plaza;
+                form_cargo.querySelector('input[name="clasificacion"]').value = cargo.clasificacion;
+                form_cargo.querySelector('input[name="codigo"]').value = cargo.codigo;
+                form_cargo.querySelector('input[name="ordenanza"]').value = cargo.ordenanza;
+                form_cargo.querySelector('input[name="fecha-ordenanza"]').value = this.toInternationalDateFormat(cargo.fecha_ordenanza);
+                
+                let oficinaJefeSelector = form_cargo.querySelector('select[name="oficina-jefe"]');
+                let suboficinaSelector = form_cargo.querySelector('select[name="suboficina"]');
+                let checkbox = form_cargo.querySelector('input[name="checkbox"]');
+
+                // establece el chexbox y selects
+                if(cargo.oficina_jefe !== '') {     // cuando oficina_id es suboficina
+                    checkbox.checked = true;
+                    suboficinaSelector.setAttribute('required', '');
+                    suboficinaSelector.disabled = false;
+
+                    // establece el selector oficina_jefe
+                    for (let option of oficinaJefeSelector.options)
+                        if(option.value === cargo.oficina_jefe) option.selected = true;
+
+                    // obtiene lista de suboficinas
+                    let data = { request: true, id: cargo.oficina_jefe };
+                    let url = CONFIG.url_base + 'request/getsuboficinas';
+            
+                    fetch(url, { 
+                        method : 'POST', 
+                        body   : JSON.stringify(data)
+                    }).then(response => response.json()).then(data => {
+                        for(let i=0; i<data.length; i++) {
+
+                            let option = document.createElement('option');
+                            option.text = data[i].nombre;
+                            option.value = data[i].id;
+
+                            // establece el selector suboficina
+                            if(data[i].id == cargo.oficina_id) option.selected = true;
+
+                            suboficinaSelector.add(option);
+                        }
+                    }).catch(error => console.log(error.message));
+
+                } else {        // cuando oficina_id es oficina-jefe
+                    checkbox.checked = false;
+                    suboficinaSelector.removeAttribute('required');
+                    suboficinaSelector.disabled = true;
+                    suboficinaSelector.length = 0;  // remove options
+                    this.addPlaceholder(suboficinaSelector, 'no data');
+
+                    // establece el selector oficina_jefe
+                    for (let option of oficinaJefeSelector.options)
+                        if(option.value === cargo.oficina_id) option.selected = true;
+                }
+            });
+        }
+    }
+
+    // Elimina un cambio del historial de cambios de un cargo
+    deleteChangesButton() {
+        if(!this.loaded) return;
+
+        let btnDeleteList = document.querySelectorAll('#datatable-historial-cambio td.actions button.deleteBtn');
+        let table = document.querySelector('#datatable-historial-cambio');
+        
+        // eventos del button eliminar de la lista de historial
+        for(let btnDelete of btnDeleteList) {
+            btnDelete.addEventListener('click', function() {
+                let row = btnDelete.closest('tr');
+                let id = row.dataset.id;
+
+                // no se puede eliminar todos los cambios, siempre debe quedar 1 mínimo
+                if(table.tBodies[0].rows.length > 1) {
+
+                    // elimina un cambio del historial
+                    let data = { request: true, id: id };
+                    let url = CONFIG.url_base + 'cargo/deleteChanges&id='+id;
+                    
+                    fetch(url, {
+                        method : 'POST', 
+                        body   : JSON.stringify(data)
+                    }).then(response => response.json()).then(data => {
+                        if(data.error) {
+                            alert(data.mensaje);
+                        } else {
+                            alert(data);
+                            table.deleteRow(row.rowIndex);
+                        }
+                    }).catch(error => console.log(error.message));
+
+                } else {
+                    alert('No se puede eliminar');
+                }
+            });
+        }
+    }   
+
+    /**
+     * Convierte la fecha local a fecha internacional ISO (YYYY-mm-dd)
+     * @param  {String} fecha
+     * @return {String}
+     */
+    toInternationalDateFormat(date) {
+        return date.split('-').reverse().join('-');
+    }
+
+    addPlaceholder(select, msg) {
+        let option = document.createElement('option');
+        option.text = msg;
+        option.selected = true;
+        option.value = '';      // value vacio fuerza a que el required del select funcione apropiadamente
+        option.setAttribute('hidden', 'hidden');
+        select.add(option);
+    }
+}

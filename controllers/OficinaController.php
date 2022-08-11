@@ -19,10 +19,7 @@ class OficinaController extends ControllerBase {
     }
 
     public function create() {
-        if(!$this->existsPOST(['nombre', 'tipo-oficina'])) {
-            $this->redirect('error');
-            return;
-        }
+        if(!$this->existsPOST(['nombre', 'tipo-oficina'])) $this->redirect('error');
 
         // tratamiento de los datos (normalización)
         $oficina_data = array(
@@ -58,10 +55,8 @@ class OficinaController extends ControllerBase {
     }
 
     public function update() {
-        if(!$this->existsPOST(['nombre', 'tipo-oficina', 'observacion']) && !isset($_GET['id'])) {
-            $this->redirect('error');
-            return;
-        }
+        if(!$this->existsPOST(['nombre', 'tipo-oficina', 'observacion'])) $this->redirect('error');
+        if(!isset($_GET['id'])) $this->redirect('error');
         
         // tratamiento de los datos (normalización)
         $oficina_data = array(
@@ -95,10 +90,7 @@ class OficinaController extends ControllerBase {
     }
 
     public function details() {
-        if(!isset($_GET['id'])) {
-            $this->redirect('error');
-            return;
-        }
+        if(!isset($_GET['id'])) $this->redirect('error');
 
         $id = $_GET['id'];
         $oficina = $this->loadModel('oficina');
@@ -155,10 +147,7 @@ class OficinaController extends ControllerBase {
      * @return Bool
      */
     public function validate($data = 'd8648364cf358ce9e920') {
-        if(!is_array($data)) {
-            $this->redirect('error');
-            return;
-        }
+        if(!is_array($data)) $this->redirect('error');
 
         $regx_name = array("options" => array("regexp" => "/^([A-Za-zÀ-ÿ,.-]\s?){1,60}$/"));
         $regx_nota = array("options" => array("regexp" => "/^([A-Za-zÀ-ÿ0-9,;(){}[\]*+¿?!¡:._-]\s?){1,200}$/"));

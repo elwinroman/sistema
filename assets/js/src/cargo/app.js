@@ -31,5 +31,11 @@ export default class App {
 
         // toggle formulario que añade cambios en el historial de cargo
         this.detailsPage.toggleFormAdd();
+
+        // controla el button editar del historial de cambios del cargo
+        this.detailsPage.editChangesButton();
+
+        // elimina un cambio del historial de cambios de un cargo
+        this.detailsPage.deleteChangesButton();
     }
 }

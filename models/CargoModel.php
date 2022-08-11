@@ -88,6 +88,44 @@ class CargoModel extends ModelBase {
         }
     }
 
+    public function updateChanges() {
+        try {
+            $sql = "UPDATE historial_cargo SET nombre = :nombre, nro_plaza = :nro_plaza, clasificacion = :clasificacion,
+                    codigo = :codigo, ordenanza = :ordenanza, fecha_ordenanza = :fecha_ordenanza, oficina_id = :oficina_id 
+                    WHERE id = :id";
+
+            $query = $this->prepare($sql);
+            $query->execute([
+                ':nombre'        => $this->nombre,
+                ':nro_plaza'     => $this->nro_plaza,
+                ':clasificacion' => $this->clasificacion,
+                ':codigo'        => $this->codigo,
+                ':ordenanza'     => $this->ordenanza,
+                ':fecha_ordenanza' => $this->fecha_ordenanza,
+                ':oficina_id'    => $this->oficina_id,
+                ':id'            => $this->id
+            ]);
+
+            return $query;
+
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
+
+    public function deleteChanges($id) {
+        try {
+            $sql = "DELETE FROM historial_cargo WHERE id = ?";
+            $query = $this->prepare($sql);
+            $query->execute([$id]);
+
+            return $query;
+            
+        } catch(PDOException $e) {
+            echo $e;
+        }
+    }
+
     public function getAll() {
         try {
             $sql = "SELECT cmain.id, c.nro_plaza, c.nombre, c.clasificacion, c.codigo, o.nombre AS oficina FROM cargo AS cmain
@@ -168,6 +206,7 @@ class CargoModel extends ModelBase {
 
     public function setSituacion($situacion) {            $this->situacion = $situacion; }
 
+    public function setId($id) {                          $this->id = $id; }
     public function setNombre($nombre) {                  $this->nombre = $nombre; }
     public function setNroPlaza($nro_plaza) {             $this->nro_plaza = $nro_plaza; }
     public function setCodigo($codigo) {                  $this->codigo = $codigo; }
