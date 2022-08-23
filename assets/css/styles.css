@@ -49,7 +49,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    transition: width 200ms;
+    transition: width var(--myduration);
     user-select: none;
     font-family: 'Poppins', Helvetica, sans-serif;
     border-right: 1px solid var(--color-platinum);
@@ -69,9 +69,8 @@ main {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 0 16px;
+    padding: 0 30px;
     margin: 5px 0;
-    transition: all 200ms;
 }
 .menu-panel.active > .menu-link,
 .menu-panel > .menu-link:hover {
@@ -86,7 +85,6 @@ main {
 .menu-link > span.menu-label {
     flex-shrink: 0;
     flex-grow: 1;
-    transition: opacity 200ms;
 }
 .menu-link > i.menu-arrow {
     transition: transform 200ms, color 200ms;
@@ -97,14 +95,13 @@ main {
 .menu-panel > .submenu-panel {
     height: 0;
     overflow: hidden;
-    transition: height 200ms;
+    transition-property: height;
 }
 .submenu-panel .submenu-link {
     display: flex;
     align-items: center;
     gap: 12px;
     height: var(--menu-link-height);
-    cursor: pointer;
     padding: 0 50px;
     transition: color 200ms;
 }
@@ -121,7 +118,7 @@ main {
     padding: 30px;
     margin-bottom: var(--footer-height);
     margin-left: var(--sidebar-width);
-    transition: margin-left 200ms, width 200ms;
+    transition: margin-left var(--myduration), width var(--myduration), padding 200ms;
     font-family: 'Poppins', Helvetica, sans-serif;
     background: #F3F3F3;
     color: var(--color-font-body);
@@ -136,7 +133,7 @@ footer {
     width: calc(100% - var(--sidebar-width));
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
     font-size: 0.85rem;
-    transition: margin-left 200ms, width 200ms;
+    transition: margin-left var(--myduration), width var(--myduration);
 
     color: var(--color-font-body);
     background-color: white;
@@ -146,18 +143,17 @@ footer {
 /* SHORT */
 body.short .sidebar {
     width: var(--sidebar-short-width);
+    transition-duration: 0ms;
 }
 body.short .menu-panel {
     margin-top: 10px;
 }
 body.short .menu-link {
     margin: 0;
-    padding: 0;
     border-radius: 0;
 }
 body.short .menu-link > i.menu-icon {
     width: var(--sidebar-short-width);
-    text-align: center;
 }
 body.short .menu-link > span.menu-label,
 body.short .menu-link > i.menu-arrow {
@@ -171,7 +167,7 @@ body.short .submenu-panel {
     margin-left: var(--sidebar-short-width);
     pointer-events: none;
     box-shadow: 3px 3px 10px rgb(0 0 0 / 16%);
-    transition-property: transform, opacity;
+    transition: all 200ms;
 }
 body.short .menu-panel.active .submenu-panel {
     height: auto !important;
@@ -394,3 +390,54 @@ ul.visibility-menu > li > label {
 .desc .dataTable-sorter::before { opacity: 1; }
 .num-column .dataTable-sorter::before,
 .num-column .dataTable-sorter::after { opacity: 0; }
+
+/* Estilos para los Media Queries (Breakpoints basados en Bootstrap v5.0) */
+@media screen and (max-width: 991px) {      /* md (≥768) */
+    .content {
+        padding: 22px;
+    }
+}
+@media screen and (max-width: 767px) {      /* sm (≥576) */
+    .sidebar {
+        width: var(--sidebar-sm-width);
+    }
+    .submenu-panel .submenu-link {
+        padding: 0 20px 0px 35px;
+    }
+    .content, footer {
+        margin-left: var(--sidebar-sm-width);
+        width: calc(100% - var(--sidebar-sm-width));
+    }
+
+    .content {
+        padding: 14px;
+    }
+    .box-ow > .box-ow-body {
+        padding: 20px 22px 22px 22px;
+    }
+}
+@media screen and (max-width: 575px) {      /* xs (<576px)*/
+    /* added .short class with javascript */
+    .mynavbar .toggle-sidebar {
+        display: none;
+    }
+    
+    body.short .sidebar,
+    body.short .menu-link > i.menu-icon {
+        width: var(--sidebar-short-xs-width);
+    }
+    body.short .content, body.short footer {
+        margin-left: var(--sidebar-short-xs-width);
+        width: calc(100% - var(--sidebar-short-xs-width));
+    }
+    body.short .menu-panel .menu-link {
+        padding: 0 18px;
+    }
+    body.short .submenu-panel {
+        margin-left: var(--sidebar-short-xs-width);
+    }
+
+    .content {
+        padding: 6px;    /* !!! error de orden en el media query */
+    }
+}

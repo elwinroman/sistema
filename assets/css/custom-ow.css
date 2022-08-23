@@ -2,7 +2,9 @@
     /* medidas */
     --navbar-height: 70px;
     --sidebar-width: 250px;
+    --sidebar-sm-width: 200px;
     --sidebar-short-width: 80px;
+    --sidebar-short-xs-width: 50px;
     --menu-link-height: 45px; 
     --footer-height: 80px;
     
@@ -14,6 +16,9 @@
 
     /* font */
     --font-size-default: 0.85rem;
+
+    /* transition */
+    --myduration: 200ms;    /* javascript inicialization on 0ms */
 }
 
 a {
