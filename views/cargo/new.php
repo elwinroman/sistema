@@ -3,8 +3,8 @@
 		<h6 class="box-ow-title bold-ow">Nuevo cargo</h6>
 		
 		<form id="form-cargo" class="box-ow-body" autocomplete="on" action="<?=URL_BASE?>cargo/create" method="POST">
-			<div class="row g-0">
-                <div class="datos-cargo col-md-6" style="border: 1px solid red">
+			<div class="row g-0 gap-ow-15">
+                <div class="datos-cargo col-md-6">
                     
                     <!-- Campo nombre -->
                     <div class="form-field-ow">
@@ -12,7 +12,7 @@
                         <input class="input-ow input-height-ow" type="text" name="nombre" pattern="\s*([A-Za-zÀ-ÿ,.-]\s*)+" maxlength="60" required autofocus>
                     </div>
         
-                    <div class="row g-0">
+                    <div class="row g-0 gap-ow-5">
                         <!-- Campo nro_plaza -->
                         <div class="form-field-ow col">
                             <label for="nro-plaza" class="bold-ow">Nro plaza</label>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-0">
+                    <div class="row g-0 gap-ow-5">
                         <!-- Campo codigo -->
                         <div class="form-field-ow col">
                             <label for="codigo" class="bold-ow">Código</label>
@@ -56,7 +56,7 @@
 
                 </div>
 
-                <div class="col-md-6" style="border: 1px solid blue">
+                <div class="col-md-6">
                     
                     <!-- Campo oficina-jefe -->
                     <div class="form-field-ow">

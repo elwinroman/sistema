@@ -14,10 +14,13 @@
 				        <span>Excel</span>
 			        </button>
                 </div>
-                <button class="btn-ow btn-ow-blue dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                    Columna
-                </button>
-                <ul class="dropdown-menu visibility-menu"></ul>
+                
+                <div>
+                    <button class="btn-ow btn-ow-blue dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        Columna
+                    </button>
+                    <ul class="dropdown-menu visibility-menu"></ul>
+                </div>
             </div>
 
             <table class="datatable-ow" id="datatable-oficina"></table>
