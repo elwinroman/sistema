@@ -12,7 +12,7 @@ CREATE TABLE usuarios (
 CREATE TABLE oficina (
   id INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(60) NOT NULL,
-  observacion VARCHAR(200) NULL
+  observacion VARCHAR(200) NULL,
   oficina_id INT NULL,
   PRIMARY KEY(id),
   CONSTRAINT uq_nombre UNIQUE(nombre),
@@ -27,7 +27,7 @@ CREATE TABLE cargo (
   presupuesto BOOLEAN NOT NULL DEFAULT 1,
   observacion VARCHAR(200) DEFAULT '',
   PRIMARY KEY(id)
-)
+) ENGINE=INNODB;
 
 -- Tabla HISTORIAL-CARGO
 CREATE TABLE historial_cargo (

@@ -10,6 +10,7 @@ export default class Sidebar {
         this.rs = window.getComputedStyle(this.root);
         this.duration = this.rs.getPropertyValue('--myduration');
         this.root.style.setProperty('--myduration', '0ms');
+        sessionStorage.setItem('sidebar', 'default');   // inicialización predeterminada
 
         if(sessionStorage.getItem('sidebar') === 'short') {
             document.body.classList.add('short');
@@ -150,7 +151,7 @@ export default class Sidebar {
         });
     }
     
-    // Remueve la clase 'active' de los menús activados
+   // Remueve la clase 'active' de los menús activados
     removerClasesActivas() {
         let list_menuPanel_active = document.querySelectorAll('.menu-panel.active');
         
